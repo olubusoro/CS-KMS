@@ -1,8 +1,10 @@
 import React from 'react';
 
-const Intro = ( {Title, Subtitle}) => {
+const Intro = ( {Title, Subtitle, className=""}) => {
   return (
-    <div>
+    <div
+    className={className}
+    >
           <p>{Title} <br />{Subtitle}</p>
     </div>
   );
