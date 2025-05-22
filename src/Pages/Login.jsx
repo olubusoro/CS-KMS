@@ -4,34 +4,62 @@ import Logo from "../assets/Group.png";
 import {MdOutlineEmail} from "react-icons/md";
 import {RiLockPasswordLine} from "react-icons/ri";
 import Button from "../Props/Button";
+import {jwtDecode} from "jwt-decode";
+import {useNavigate} from "react-router-dom";
 
 const Login = () => {
-
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
   const handleLogin = async (e) => {
     e.preventDefault();
 
     try {
-      const res = await fetch("", {
+      const res = await fetch("https://localhost:7161/api/Auth/login", {
         method: "POST",
         headers: {
-          "content-type": "application/json"
+          "content-type": "application/json",
         },
-          body:JSON.stringify({email, password}),
+        body: JSON.stringify({email, password}),
       });
+
       const data = await res.json();
+
       if (res.ok) {
+        const token = data.message;
+
+        // Decode the JWT token
+        const decoded = jwtDecode(token);
+        console.log("Decoded JWT:", decoded);
+
+        // Extract role from standard or custom claim
+        const role =
+          decoded.role ||
+          decoded[
+            "http://schemas.microsoft.com/ws/2008/06/identity/claims/role"
+          ];
+
+        const username =
+          decoded.name ||
+          decoded["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name"];
+
+        // Store data in localStorage
+        localStorage.setItem("token", token);
+        localStorage.setItem("userRole", role);
+        localStorage.setItem("username", username);
+
         alert("Login successful!");
-        //redirect user
+
+        // Navigate to dashboard layout and refresh to load sidebar correctly
+        navigate("/dashboardLayout");
+        setTimeout(() => navigate(0), 200); // Refresh after short delay
       } else {
         alert(data.message || "Login failed.");
       }
-    }
-    catch (error) {
+    } catch (error) {
       console.error("Error:", error);
-      alert("something went wrong, please try again");
+      alert("Something went wrong. Please try again.");
     }
   };
 
@@ -39,12 +67,13 @@ const Login = () => {
     <div className="main">
       <div className="card">
         <div className="card-content">
-          <h1 className="title">WE SHARE <span>WE GROW</span></h1>
+          <h1 className="title">
+            WE SHARE <span>WE GROW</span>
+          </h1>
           <div className="card-body">
             <div className="login">
               <h1>WELCOME</h1>
-              <form action="">
-                <label htmlFor="Email"> </label>
+              <form>
                 <div className="email">
                   <MdOutlineEmail className="email-icon" />
                   <input
@@ -52,17 +81,15 @@ const Login = () => {
                     id="email"
                     placeholder="Enter your Email"
                     required
-                    value={email} 
+                    value={email}
                     onChange={(e) => setEmail(e.target.value)}
                   />
                 </div>
-                <label htmlFor="Email"> </label>
                 <div className="password">
                   <RiLockPasswordLine className="password-icon" />
                   <input
                     type="password"
-                    placeholder="password"
-                    id="name"
+                    placeholder="Password"
                     required
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
@@ -77,8 +104,8 @@ const Login = () => {
               </form>
             </div>
             <div className="logo">
-                          <img src={Logo} alt="" />
-                          <p>"connect with your colleagues with ease"</p>
+              <img src={Logo} alt="logo" />
+              <p>"connect with your colleagues with ease"</p>
             </div>
           </div>
         </div>

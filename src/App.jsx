@@ -5,6 +5,9 @@ import Login from './Pages/Login'
 import DashboardLayout from './Components/SdashboardLayout';
 import Sidebar from "./Components/Side"
 import Topbar from './Components/Topbar';
+import DadminDashboard from './Pages/DadminDashboard';
+import UserDashboard from './Pages/UserDashboard';
+
 
 
 function App() {
@@ -20,6 +23,8 @@ function App() {
         <Routes>
           <Route path="/" element={<Login />} />
           <Route path="/dashboardLayout" element={<DashboardLayout />} />
+          <Route path="/dadmindashboard" element={<DadminDashboard />} />
+          <Route path="/userdashboard" element={<UserDashboard />} />
         </Routes>
       </main>
     </div>

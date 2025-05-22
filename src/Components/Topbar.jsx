@@ -5,13 +5,13 @@ import {CiUser} from "react-icons/ci";
 
 const Topbar = () => {
   return (
-    <nav class="bg-white">
-      <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
+    <nav className="bg-white">
+      <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
         <div className="search-bar">
-          <form class="w-2xs mx-auto">
+          <form className="w-2xs mx-auto">
             <label
               for="default-search"
-              class="mb-2 text-sm font-medium  sr-only dark:text-white"
+              className="mb-2 text-sm font-medium  sr-only dark:text-white"
             >
               Search
             </label>
@@ -50,7 +50,7 @@ const Topbar = () => {
         <button
           data-collapse-toggle="navbar-default"
           type="button"
-          class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+          className="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
           aria-controls="navbar-default"
           aria-expanded="false"
         ></button>

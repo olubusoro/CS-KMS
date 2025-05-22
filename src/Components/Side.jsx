@@ -1,85 +1,77 @@
-import React, {useState} from "react";
-import {
-  HiChartPie,
-  HiViewBoards,
-  HiInbox,
-  HiUser,
-  HiShoppingBag,
-  HiArrowSmRight,
-  HiTable,
-} from "react-icons/hi";
-import { MdOutlinePostAdd } from "react-icons/md";
+import React, {useState, useEffect} from "react";
+import {Link, useLocation} from "react-router-dom";
+import {HiArrowSmRight, HiTable} from "react-icons/hi";
+import {MdOutlinePostAdd} from "react-icons/md";
 import {CgProfile} from "react-icons/cg";
 import { FaPeopleGroup } from "react-icons/fa6";
-import { RiGroup3Fill } from "react-icons/ri";
+import {MdCategory} from "react-icons/md";
+import {RiGroup3Fill} from "react-icons/ri";
 import {TbReportAnalytics} from "react-icons/tb";
 import "./Side.css";
 
 const Side = () => {
   const [isOpen, setIsOpen] = useState(true);
+  const [userRole, setUserRole] = useState(null); // null by default
+  const location = useLocation();
+
+  // Update role on every route change
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    const storedRole = localStorage.getItem("userRole");
+
+    if (token && storedRole) {
+      setUserRole(storedRole);
+    } else {
+      setUserRole(null); // fallback if not logged in
+    }
+  }, [location.pathname]);
 
   const toggleSidebar = () => setIsOpen(!isOpen);
-  const userRole = localStorage.getItem("userRole") || "staff";
 
   const sideBarItems = {
-    super_admin: [
-      { icon: <MdOutlinePostAdd />, label: "Post" },
-      { icon: <RiGroup3Fill />, label: "Users" },
-      { icon: <FaPeopleGroup />, label: "Department" },
-      { icon: <CgProfile />, label: "Profile" },
-      { icon: <TbReportAnalytics />, label: "Analysis" },
-      { icon: <HiArrowSmRight />, label: "Sign In" },
-      { icon: <HiTable />, label: "Sign Up" },
+    SuperAdmin: [
+      {icon: <MdOutlinePostAdd />, label: "Post", path: "/post"},
+      {icon: <RiGroup3Fill />, label: "Users", path: "/users"},
+      {icon: <FaPeopleGroup />, label: "Department", path: "/department"},
+      {icon: <TbReportAnalytics />, label: "Analysis", path: "/analysis"},
+      {icon: <CgProfile />, label: "Profile", path: "/profile"},
+      {icon: <HiTable />, label: "Sign Up", path: "/signout"},
     ],
-    admin: [
-      { icon: <MdOutlinePostAdd />, label: "Post" },
-      { icon: <FaPeopleGroup />, label: "Department" },
-      { icon: <CgProfile />, label: "Profile" },
+    DeptAdmin: [
+      {icon: <MdOutlinePostAdd />, label: "Post", path: "/post"},
+      {icon: <MdCategory />, label: "Category", path: "/category"},
+      {icon: <CgProfile />, label: "Profile", path: "/profile"},
     ],
-    staff: [
-      { icon: <CgProfile />, label: "Profile" },
-      { icon: <TbReportAnalytics />, label: "Analysis" },
+    Staff: [
+      {icon: <MdOutlinePostAdd />, label: "Post", path: "/post"},
+      {icon: <CgProfile />, label: "Profile", path: "/profile"},
+      {icon: <HiTable />, label: "Sign Up", path: "/signout"},
     ],
   };
-  
+
+  const defaultItems = [
+    {icon: <CgProfile />, label: "Profile", path: "/profile"},
+    {icon: <HiArrowSmRight />, label: "Login", path: "/login"},
+  ];
+
+  // Decide what menu to show
+  const menuItems = userRole
+    ? sideBarItems[userRole] || defaultItems
+    : defaultItems;
 
   return (
     <div className={`sidebar ${isOpen ? "open" : "collapsed"}`}>
       <button className="toggle-btn" onClick={toggleSidebar}>
         ☰
       </button>
-
-      {/* put a generic user logo */}
       <ul className="menu">
-        {sideBarItems[userRole] ?.map((item, index) => (
-          <li>
-            {item.icon} {isOpen && <span>{item.label}</span>}
+        {menuItems.map((item, index) => (
+          <li key={index}>
+            <Link to={item.path} className="flex items-center gap-2">
+              {item.icon} {isOpen && <span>{item.label}</span>}
+            </Link>
           </li>
         ))}
-        // <li>
-        //   <MdOutlinePostAdd /> {isOpen && <span>Post</span>}
-        // </li>
-        // <li>
-        //   <RiGroup3Fill /> {isOpen && <span>Users</span>}
-        // </li>
-        // <li>
-        //   <FaPeopleGroup /> {isOpen && <span>Department</span>}
-        // </li>
-        // <li>
-        //   {" "}
-        //   <CgProfile />
-        //   {isOpen && <span>Profile</span>}
-        // </li>
-        // <li>
-        //   <TbReportAnalytics />
-        //   {isOpen && <span>Analysis</span>}
-        // </li>
-        // <li>
-        //   <HiArrowSmRight /> {isOpen && <span>Sign In</span>}
-        // </li>
-        // <li>
-        //   <HiTable /> {isOpen && <span>Sign Up</span>}
-        // </li>
       </ul>
     </div>
   );
