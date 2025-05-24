@@ -5,6 +5,8 @@ import DadminDashboard from "./Pages/DadminDashboard";
 import UserDashboard from "./Pages/UserDashboard";
 import Post from "./Pages/Posts";
 import Editor from "./Components/PostEditor"
+import Users from "./Pages/Users";
+import Departments from "./Pages/Departments";
 
 function App() {
   return (
@@ -17,6 +19,8 @@ function App() {
         <Route path="new-post" element={<Post />} >
           <Route path="editor" element={<Editor />} />
           </Route>
+        <Route path="users" element={<Users />} />
+        <Route path="departments" element={<Departments />} />
       </Route>
     </Routes>
   );
