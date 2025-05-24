@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import Button from '../Props/Button'
 
 const roles = [
   { value: 0, label: "Staff" },
@@ -84,7 +83,7 @@ const CreateUserModal = ({ open, onClose, onUserCreated }) => {
   if (!open) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60" onClick={handleClose}>
+    <div className="fixed inset-0 z-50 flex items-center justify-center backdrop-blur-[1px] bg-black/60" onClick={handleClose}>
       <div className="bg-white rounded-lg shadow-lg w-full max-w-md p-6 relative" onClick={e => e.stopPropagation()}>
         <button
           className="absolute top-2 right-2 text-gray-400 hover:text-gray-600"
