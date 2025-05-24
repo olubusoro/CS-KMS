@@ -30,7 +30,11 @@ const Side = () => {
 
   const sideBarItems = {
     SuperAdmin: [
-      {icon: <MdOutlinePostAdd />, label: "Post", path: "/post"},
+      {
+        icon: <MdOutlinePostAdd />,
+        label: "Post",
+        path: "/dashboardLayout/new-post",
+      },
       {icon: <RiGroup3Fill />, label: "Users", path: "/users"},
       {icon: <FaPeopleGroup />, label: "Department", path: "/department"},
       {icon: <TbReportAnalytics />, label: "Analysis", path: "/analysis"},
