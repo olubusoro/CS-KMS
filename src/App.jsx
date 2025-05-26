@@ -3,6 +3,8 @@ import Login from "./Pages/Login";
 import DashboardLayout from "./Components/SdashboardLayout";
 import Post from "./Pages/Posts";
 import Editor from "./Components/PostEditor"
+import Users from "./Pages/Users";
+import Departments from "./Pages/Departments";
 
 function App() {
   return (
@@ -15,7 +17,8 @@ function App() {
         <Route path="new-post" element={<Post />} >
           <Route path="editor" element={<Editor />} />
           </Route>
-          <Route path="/user" element={<User/>} />
+        <Route path="users" element={<Users />} />
+        <Route path="departments" element={<Departments />} />
       </Route>
     </Routes>
   );
