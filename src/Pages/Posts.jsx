@@ -1,23 +1,34 @@
-import React from 'react';
-import { Outlet, useNavigate } from 'react-router-dom';
+import React, { useState } from 'react';
+import { Outlet, useNavigate, useSearchParams } from 'react-router-dom';
+import PostEditor from '../Components/PostEditor';
+import Modal from '../Components/Modal';
+import Button from '../Props/Button';
 
 
 
 const Posts = () => {
-    const navigate = useNavigate();
+  const [isModalOpen, setIsModalOpen] = useState(false)
+    // const navigate = useNavigate();
     
-    const handleNewPost = () => {
-        navigate("/dashboardLayout/new-post/Editor");
-    }
+  const handleNewPost = () => {
+    setIsModalOpen(true);
+    // navigate("/dashboardLayout/new-post/Editor");
+  };
+  const closeModal = () => {
+    setIsModalOpen(false)
+  }
   return (
     <>
-      <button
+      <Button
+        label="New Post"
       onClick={handleNewPost}
       className='border rounded-xl w-30 cursor-pointer bg-green-500 p-3'
-      >
-      New Post
+      />
+      <Modal isOpen={isModalOpen} onClose={closeModal}>
+        <PostEditor onClose={closeModal} />
+     </Modal>
      
-    </button>
+ 
      <Outlet />
     </>
   );

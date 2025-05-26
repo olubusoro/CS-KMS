@@ -1,7 +1,8 @@
 import React, {useState} from "react";
-import LexicalEditor from "./LexicalEditor"; // import your new editor
+import LexicalEditor from "./LexicalEditor"; // to import the WYSIWYG Editor
 
-const PostEditor = () => {
+
+const PostEditor = ({onClose}) => {
   const [content, setContent] = useState("");
   const [category, setCategory] = useState("");
   const [title, setTitle] = useState("");
@@ -38,6 +39,7 @@ const PostEditor = () => {
         setContent("");
         setFile(null);
         setVisibility("public");
+        if (onClose) onclose()
       } else {
         alert("Error creating post");
       }
@@ -78,7 +80,7 @@ const PostEditor = () => {
 
       <button
         type="submit"
-        className="bg-blue-600 text-white px-4 py-2 rounded"
+        className="bg-green-400 text-white px-4 py-2 rounded cursor-pointer"
       >
         Submit Post
       </button>

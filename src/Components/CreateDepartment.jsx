@@ -81,7 +81,7 @@ const CreateDepartment = ({ open, onClose, onDepartmentCreated }) => {
           </div>
           <button
             type="submit"
-            className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition"
+            className="w-full bg-green-400 text-white py-2 rounded hover:opacity-70 cursor-pointer transition"
             disabled={loading}
           >
             {loading ? "Creating..." : "Create Department"}

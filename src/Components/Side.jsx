@@ -70,11 +70,14 @@ const Side = () => {
       </button>
       <ul className="menu">
         {menuItems.map((item, index) => (
-          <li key={index}>
-            <Link to={item.path} className="flex items-center gap-2">
+          <Link to={item.path}>
+              <li key={index}>
+           
               {item.icon} {isOpen && <span>{item.label}</span>}
-            </Link>
+          
           </li>
+          </Link>
+        
         ))}
       </ul>
     </div>
