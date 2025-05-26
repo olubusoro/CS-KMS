@@ -1,8 +1,6 @@
 import {Routes, Route} from "react-router-dom";
 import Login from "./Pages/Login";
 import DashboardLayout from "./Components/SdashboardLayout";
-import DadminDashboard from "./Pages/DadminDashboard";
-import UserDashboard from "./Pages/UserDashboard";
 import Post from "./Pages/Posts";
 import Editor from "./Components/PostEditor"
 
@@ -17,6 +15,7 @@ function App() {
         <Route path="new-post" element={<Post />} >
           <Route path="editor" element={<Editor />} />
           </Route>
+          <Route path="/user" element={<User/>} />
       </Route>
     </Routes>
   );
