@@ -14,7 +14,7 @@ function App() {
 
       {/* Private Layout with Sidebar + Topbar */}
       <Route path="/dashboardLayout" element={<DashboardLayout />}>
-        <Route path="new-post" element={<Post />} >
+        < Route path="new-post" element={<Post />} >
           <Route path="editor" element={<Editor />} />
           </Route>
         <Route path="users" element={<Users />} />

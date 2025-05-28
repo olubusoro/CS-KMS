@@ -4,13 +4,21 @@ import {RichTextPlugin} from "@lexical/react/LexicalRichTextPlugin";
 import {ContentEditable} from "@lexical/react/LexicalContentEditable";
 import {HistoryPlugin} from "@lexical/react/LexicalHistoryPlugin";
 import {OnChangePlugin} from "@lexical/react/LexicalOnChangePlugin";
+import {ToolbarPlugin} from "./ToolbarPlugin";
 import {$generateHtmlFromNodes} from "@lexical/html";
+import {LexicalErrorBoundary} from "@lexical/react/LexicalErrorBoundary";
 import "./LexicalEditor.css";
 
 const editorConfig = {
   namespace: "PostEditor",
-  onError: (error) => console.error("Lexical error:", error),
-  theme: {},
+  theme: {
+    // Add custom styles here if needed
+    paragraph: "editor-paragraph",
+  },
+  onError(error) {
+    console.error("Lexical Error:", error);
+  },
+  nodes: [],
 };
 
 const LexicalEditor = ({onChange}) => {
@@ -23,13 +31,12 @@ const LexicalEditor = ({onChange}) => {
 
   return (
     <LexicalComposer initialConfig={editorConfig}>
-      <div className="editor-container">
+      <div className="editor-wrapper">
+        <ToolbarPlugin />
         <RichTextPlugin
           contentEditable={<ContentEditable className="editor-input" />}
-          placeholder={
-            <div className="editor-placeholder">Start writing...</div>
-          }
-          ErrorBoundary={({children}) => <>{children}</>}
+          placeholder={<div className="editor-placeholder mt-64">Start writing…</div>}
+          ErrorBoundary={LexicalErrorBoundary}
         />
         <HistoryPlugin />
         <OnChangePlugin onChange={handleChange} />

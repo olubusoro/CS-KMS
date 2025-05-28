@@ -76,7 +76,7 @@ h1 {
 .email-icon{
     position: absolute;
     left: 10px;
-    top: 55%;
+    top: 70%;
     transform: translateY(-50%);
 
 }
@@ -96,7 +96,7 @@ h1 {
 .password-icon {
     position: absolute;
 left: 10px;
-top: 55%;
+top: 70%;
 transform: translateY(-50%);
 }
 
@@ -114,7 +114,7 @@ input {
     padding: 10px;
     width: 400px;
     background-color: #ffffff;
-    margin-top: 5px;
+    margin-top: 30px;
     border: 1px solid red;
     border-radius: 10px;
 }

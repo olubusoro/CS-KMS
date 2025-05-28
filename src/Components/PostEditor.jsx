@@ -1,5 +1,6 @@
 import React, {useState} from "react";
 import LexicalEditor from "./LexicalEditor"; // to import the WYSIWYG Editor
+import Button from "../Props/Button";
 
 
 const PostEditor = ({onClose}) => {
@@ -19,6 +20,7 @@ const PostEditor = ({onClose}) => {
     const formData = new FormData();
     formData.append("title", title);
     formData.append("content", content);
+    formData.append("category", category);
     formData.append("visibility", visibility);
     if (file) formData.append("file", file);
 
@@ -61,11 +63,17 @@ const PostEditor = ({onClose}) => {
 
       <LexicalEditor onChange={setContent} />
 
-      <input
+      {/* <input
         type="file"
         accept=".pdf,.docx,.doc,image/*"
         onChange={(e) => setFile(e.target.files[0])}
-        className="block mt-2"
+        className=""
+      /> */}
+      <input
+        type="file"
+        id="fileUpload"
+        onChange={(e) => setFile(e.target.files[0])}
+        class="block w-full border border-gray-300 rounded-lg p-2 text-gray-700 file:bg-green-500 file:text-white file:px-4 file:py-2 file:rounded-lg file:border-none file:cursor-pointer"
       />
 
       <select
@@ -78,12 +86,11 @@ const PostEditor = ({onClose}) => {
         <option value="department">Department</option>
       </select>
 
-      <button
+      <Button
+        label="Submit"
         type="submit"
         className="bg-green-400 text-white px-4 py-2 rounded cursor-pointer"
-      >
-        Submit Post
-      </button>
+      />
     </form>
   );
 };

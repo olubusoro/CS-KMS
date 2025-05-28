@@ -29,6 +29,39 @@
     padding: 0;
     margin: 0;
   }
+  .sidebar-footer img.footer-logo {
+    width: 100px;
+    margin-top: 2rem;
+    transition: all 0.3s ease;
+  }
+  
+  /* Example: SuperAdmin gets a red border */
+  .sidebar-footer.superadmin img.footer-logo {
+    border: 2px solid red;
+    border-radius: 10px;
+  }
+  
+  /* DeptAdmin gets a blue border */
+  .sidebar-footer.deptadmin img.footer-logo {
+    border: 2px dashed blue;
+    border-radius: 50%;
+  }
+  
+  /* Staff gets a green glow */
+  .sidebar-footer.staff img.footer-logo {
+    box-shadow: 0 0 10px green;
+  }
+  
+  /* Guest or no role */
+  .sidebar-footer.guest img.footer-logo {
+    opacity: 0.5;
+  }
+
+  .sidebar.collapsed .sidebar-footer img.footer-logo {
+    width: 40px;
+    margin: auto;
+  }
+  
   
   .menu li {
     display: flex;

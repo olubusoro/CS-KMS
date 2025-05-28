@@ -6,8 +6,10 @@ import {CgProfile} from "react-icons/cg";
 import { FaPeopleGroup } from "react-icons/fa6";
 import {MdCategory} from "react-icons/md";
 import {RiGroup3Fill} from "react-icons/ri";
-import {TbReportAnalytics} from "react-icons/tb";
+import { TbReportAnalytics } from "react-icons/tb";
+import {IoIosGitPullRequest} from "react-icons/io";
 import "./Side.css";
+import Logo from "../assets/Switch.jpeg"
 
 const Side = () => {
   const [isOpen, setIsOpen] = useState(true);
@@ -36,25 +38,37 @@ const Side = () => {
         path: "/dashboardLayout/new-post",
       },
       {icon: <RiGroup3Fill />, label: "Users", path: "/dashboardLayout/users"},
-      {icon: <FaPeopleGroup />, label: "Department", path: "/dashboardLayout/departments"},
+      {
+        icon: <FaPeopleGroup />,
+        label: "Department",
+        path: "/dashboardLayout/departments",
+      },
       {icon: <TbReportAnalytics />, label: "Analysis", path: "/analysis"},
       {icon: <CgProfile />, label: "Profile", path: "/profile"},
       {icon: <HiTable />, label: "Sign Up", path: "/signout"},
     ],
     DeptAdmin: [
-      {icon: <MdOutlinePostAdd />, label: "Post", path: "/post"},
+      {
+        icon: <MdOutlinePostAdd />,
+        label: "Post",
+        path: "/dashboardLayout/new-post",
+      },
       {icon: <MdCategory />, label: "Category", path: "/category"},
-      {icon: <CgProfile />, label: "Profile", path: "/profile"},
+      {icon: <CgProfile />, label: "Profile", path: "/dashboardLayout/profile"},
     ],
     Staff: [
-      {icon: <MdOutlinePostAdd />, label: "Post", path: "/post"},
+      {
+        icon: <MdOutlinePostAdd />,
+        label: "Post",
+        path: "/dashboardLayout/new-post",
+      },
       {icon: <CgProfile />, label: "Profile", path: "/profile"},
-      {icon: <HiTable />, label: "Sign Up", path: "/signout"},
+      {icon: <IoIosGitPullRequest />, label: "Access Request", path: "/"},
     ],
   };
 
   const defaultItems = [
-    {icon: <CgProfile />, label: "Profile", path: "/profile"},
+    {icon: <CgProfile />, label: "Profile", path: "/dashboardLayout/profile"},
     {icon: <HiArrowSmRight />, label: "Login", path: "/login"},
   ];
 
@@ -80,6 +94,10 @@ const Side = () => {
         
         ))}
       </ul>
+      {/* <footer className={`sidebar-footer ${userRole?.toLowerCase() || 'guest'}`}> */}
+      <footer>
+        <img src={Logo} className="pt-27 "/>
+      </footer>
     </div>
   );
 };
