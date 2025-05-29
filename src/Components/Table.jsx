@@ -1,0 +1,113 @@
+import React, { useState } from "react";
+import EditModal from "./EditModal";
+import { BiRotateLeft } from "react-icons/bi";
+
+const Table = ({ data, title }) => {
+  const [editItem, setEditItem] = useState(null);
+
+    const exclude = ["id", "createdAt"];
+    const fields = data && data[0]
+        ? Object.keys(data[0])
+            .filter(key => !exclude.includes(key))
+            .map(key => ({
+                name: key,
+                label: key.charAt(0).toUpperCase() + key.slice(1),
+                required: true // or set based on your needs
+            }))
+        : [];
+        function formatDate(value) {
+            // Checks for ISO date string and formats it
+            if (typeof value === "string" && /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}/.test(value)) {
+                const date = new Date(value);
+                return date.toLocaleString(); // You can customize the format if you want
+            }
+            return value;
+        }
+    const handleEditSubmit = (updatedItem) => {
+        // Handle the updated item here (e.g., send to API or update state)
+        // You may want to call a prop callback to update parent state
+        // For now, just log it:
+        console.log("Updated item:", updatedItem);
+    };
+
+  if (!Array.isArray(data) || data.length === 0) {
+    return <div className="p-4 text-gray-500">No data available.</div>;
+  }
+
+  return (
+    <div className="overflow-x-auto">
+      <table className="min-w-full bg-white">
+        <thead>
+          <tr>
+            {Object.keys(data[0]).map((key) => (
+              <th
+                key={key}
+                className="px-4 py-2 border-b-2 border-gray-200 text-left text-sm font-semibold text-gray-700"
+              >
+                {key.charAt(0).toUpperCase() + key.slice(1)}
+              </th>
+            ))}
+            <th className="px-3 py-2 border-b-2 border-gray-200 text-left text-sm font-semibold text-gray-700">
+              Actions
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          {data.map((item, index) => (
+            <tr
+              key={index}
+              className="hover:bg-gray-100 transition-colors duration-200"
+            >
+              {Object.values(item).map((value, idx) => (
+                <td
+                  key={idx}
+                  className="px-4 py-2 border-b border-gray-200 text-sm text-gray-700"
+                >
+                  {formatDate(value)}
+                </td>
+              ))}
+              <td className="py-2 border-b border-gray-200 ">
+                {title && title.toLowerCase() === "user" && (
+                  <a
+                    href="#"
+                    // onClick={} // Add your reset password handler here
+                    title="Reset Password"
+                    aria-label="Reset Password"
+                    className="inline-flex items-center px-3 py-1 text-lg text-gray-600 hover:text-blue-500 transition"
+                  >
+                    <span>
+                      <BiRotateLeft className="inline-block mr-2 text-gray-500 hover:text-blue-500 transition" />
+                    </span>
+                  </a>
+                )}
+                <button
+                  className="px-4 py-1 bg-blue-500 text-white rounded hover:bg-blue-600 transition"
+                  onClick={() => setEditItem(item)}
+                >
+                  Edit
+                </button>
+                <button className="px-4 py-1 bg-red-500 text-white rounded hover:bg-red-600 transition ml-2">
+                  Delete
+                </button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+      {editItem && (
+        <EditModal
+          open={!!editItem}
+          title={title ? `Edit ${title}` : "Edit Item"}
+          fields={fields}
+          initialData={editItem}
+          onClose={() => setEditItem(null)}
+          onSubmit={handleEditSubmit}
+        />
+      )}
+    </div>
+  );
+};
+
+
+
+export default Table;
