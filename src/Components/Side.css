@@ -83,4 +83,97 @@
   .menu span {
     white-space: nowrap;
   }
-  
+
+  /* Responsive sidebar for tablets and phones */
+@media (max-width: 900px) {
+  .sidebar {
+    width: 60px;
+    min-width: 60px;
+    padding: 5px;
+  }
+  .sidebar.open {
+    width: 180px;
+    min-width: 180px;
+  }
+  .sidebar .toggle-btn {
+    font-size: 24px;
+    margin-bottom: 10px;
+  }
+  .menu li {
+    margin-top: 1.5rem;
+    padding-left: 5px;
+    font-size: 1rem;
+  }
+  .sidebar-footer img.footer-logo {
+    width: 60px;
+  }
+}
+
+@media (max-width: 600px) {
+  .sidebar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 50;
+    height: 100vh;
+    width: 0;
+    min-width: 0;
+    overflow-x: hidden;
+    transition: width 0.3s;
+    background: #166534;
+  }
+  .sidebar.open {
+    width: 70vw;
+    min-width: 0;
+    box-shadow: 2px 0 8px rgba(0,0,0,0.2);
+  }
+  .sidebar.collapsed {
+    width: 0;
+  }
+  .menu li span {
+    display: inline;
+  /* Yes, you can move this logic to the JSX file. 
+    Instead of using a CSS selector like `.sidebar-footer img.footer-logo { ... }`, 
+    you can apply the styles directly to the `img` element via the `style` prop or 
+    by conditionally applying class names using a library like `classnames` or template literals.
+
+    Example in JSX:
+    <img
+      className={`footer-logo ${roleClass}`}
+      style={{ width: sidebarCollapsed ? 40 : 100 }}
+      src="logo.png"
+      alt="Footer Logo"
+    />
+
+    Where `roleClass` is determined by the user's role, and `sidebarCollapsed` is a boolean.
+  */
+    width: 40px;
+  }
+}
+
+/* Hamburger always visible on mobile */
+.toggle-btn-mobile {
+  display: none;
+}
+
+@media (max-width: 600px) {
+  .toggle-btn-mobile {
+    display: block;
+    position: fixed;
+    top: 16px;
+    left: 16px;
+    z-index: 100;
+    background: #166534;
+    color: white;
+    border: none;
+    font-size: 2rem;
+    border-radius: 6px;
+    padding: 6px 14px;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  }
+  /* Hide the sidebar's internal toggle button if it exists */
+  .sidebar .toggle-btn {
+    display: none;
+  }
+}

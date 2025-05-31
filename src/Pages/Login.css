@@ -100,18 +100,17 @@ top: 70%;
 transform: translateY(-50%);
 }
 
-form {
+.login form {
     display: flex;
     flex-direction: column;
 }
 
-label {
+.login label {
     margin-top: 20px;
 }
 
 
-input {
-    padding: 10px;
+.login input {
     width: 400px;
     background-color: #ffffff;
     margin-top: 30px;
@@ -200,7 +199,7 @@ input {
     padding-top: 1rem;
     font-size: 18px;
   }
-  input {
+  .login input {
     width: 100%;
     min-width: 0;
     max-width: 100%;
@@ -243,6 +242,14 @@ input {
   }
   .title {
     font-size: 1.2rem;
+  }
+
+  .password input{
+    padding-left: 35px;
+  }
+
+  .email input {
+    padding-left: 35px;
   }
 }
 

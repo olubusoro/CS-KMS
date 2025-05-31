@@ -31,7 +31,7 @@ const Users = () => {
     }
     
   return (
-    <>
+  <div>
     <div>
       <Button
       label="New User"
@@ -51,8 +51,7 @@ const Users = () => {
     <div className='mt-5 p-5'>
       <Table data={users} title={'User'} />
     </div>
-     <Outlet />
-    </>
+  </div>
   );
 }
 

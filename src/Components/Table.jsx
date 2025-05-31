@@ -35,19 +35,19 @@ const Table = ({ data, title }) => {
   }
 
   return (
-    <div className="overflow-x-auto">
-      <table className="min-w-full bg-white">
+    <div className="overflow-x-auto w-full">
+      <table className="min-w-full bg-white text-xs sm:text-sm md:text-base">
         <thead>
           <tr>
             {Object.keys(data[0]).map((key) => (
               <th
                 key={key}
-                className="px-4 py-2 border-b-2 border-gray-200 text-left text-sm font-semibold text-gray-700"
+                className="px-1 py-1 sm:px-2 sm:py-2 md:px-4 md:py-2 border-b-2 border-gray-200 text-left font-semibold text-gray-700 whitespace-nowrap"
               >
                 {key.charAt(0).toUpperCase() + key.slice(1)}
               </th>
             ))}
-            <th className="px-3 py-2 border-b-2 border-gray-200 text-left text-sm font-semibold text-gray-700">
+            <th className="px-1 py-1 sm:px-2 sm:py-2 md:px-3 md:py-2 border-b-2 border-gray-200 text-left font-semibold text-gray-700 whitespace-nowrap">
               Actions
             </th>
           </tr>
@@ -61,32 +61,31 @@ const Table = ({ data, title }) => {
               {Object.values(item).map((value, idx) => (
                 <td
                   key={idx}
-                  className="px-4 py-2 border-b border-gray-200 text-sm text-gray-700"
+                  className="px-1 py-1 sm:px-2 sm:py-2 md:px-4 md:py-2 border-b border-gray-200 text-gray-700 whitespace-nowrap"
                 >
                   {formatDate(value)}
                 </td>
               ))}
-              <td className="py-2 border-b border-gray-200 ">
+              <td className="py-1 sm:py-2 border-b border-gray-200 whitespace-nowrap">
                 {title && title.toLowerCase() === "user" && (
                   <a
                     href="#"
-                    // onClick={} // Add your reset password handler here
                     title="Reset Password"
                     aria-label="Reset Password"
-                    className="inline-flex items-center px-3 py-1 text-lg text-gray-600 hover:text-blue-500 transition"
+                    className="inline-flex items-center px-1 sm:px-2 md:px-3 py-1 text-base sm:text-lg text-gray-600 hover:text-blue-500 transition"
                   >
                     <span>
-                      <BiRotateLeft className="inline-block mr-2 text-gray-500 hover:text-blue-500 transition" />
+                      <BiRotateLeft className="inline-block mr-1 sm:mr-2 text-gray-500 hover:text-blue-500 transition" />
                     </span>
                   </a>
                 )}
                 <button
-                  className="px-4 py-1 bg-blue-500 text-white rounded hover:bg-blue-600 transition"
+                  className="px-1 sm:px-2 md:px-4 py-1 bg-blue-500 text-white rounded hover:bg-blue-600 transition"
                   onClick={() => setEditItem(item)}
                 >
                   Edit
                 </button>
-                <button className="px-4 py-1 bg-red-500 text-white rounded hover:bg-red-600 transition ml-2">
+                <button className="px-1 sm:px-2 md:px-4 py-1 bg-red-500 text-white rounded hover:bg-red-600 transition ml-1 sm:ml-2">
                   Delete
                 </button>
               </td>
