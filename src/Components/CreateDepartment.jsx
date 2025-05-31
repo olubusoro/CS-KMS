@@ -53,7 +53,7 @@ const CreateDepartment = ({ open, onClose, onDepartmentCreated }) => {
       onClick={handleClose}
     >
       <div
-        className="bg-white rounded-lg shadow-lg w-full max-w-md p-6 relative"
+        className="bg-white rounded-lg shadow-lg w-full max-w-md p-3 relative"
         onClick={(e) => e.stopPropagation()}
       >
         <button

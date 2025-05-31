@@ -99,7 +99,7 @@ const Login = () => {
                   label="Login"
                   onClick={handleLogin}
                   type="submit"
-                  className="btn"
+                  className="btn hover:bg-green-700"
                 />
               </form>
             </div>

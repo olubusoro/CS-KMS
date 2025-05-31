@@ -44,7 +44,7 @@ const Side = () => {
         path: "/dashboardLayout/departments",
       },
       {icon: <TbReportAnalytics />, label: "Analysis", path: "/analysis"},
-      {icon: <CgProfile />, label: "Profile", path: "/profile"},
+      {icon: <CgProfile />, label: "Profile", path: "/dashboardLayout/profile"},
       {icon: <HiTable />, label: "Sign Up", path: "/signout"},
     ],
     DeptAdmin: [

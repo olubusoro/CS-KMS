@@ -130,10 +130,6 @@ input {
     cursor: pointer;
 }
 
-.btn:hover {
-    background-color: #fff;
-    color: red;
-}
 
 .btn:active {
   opacity: 0.7;

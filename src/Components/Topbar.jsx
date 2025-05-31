@@ -3,7 +3,7 @@ import {IoIosNotificationsOutline} from "react-icons/io";
 import {CiSettings} from "react-icons/ci";
 import { CiUser } from "react-icons/ci";
 import Button from "../Props/Button"
-import Modal from "./Modal";
+import Modal from "../Props/Modal";
 import Notifications from "./Notifications";
 
 const Topbar = () => {

@@ -5,6 +5,7 @@ import Post from "./Pages/Posts";
 import Editor from "./Components/PostEditor"
 import Users from "./Pages/Users";
 import Departments from "./Pages/Departments";
+import Profile from "./Pages/Profile";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
           </Route>
         <Route path="users" element={<Users />} />
         <Route path="departments" element={<Departments />} />
+        <Route path="profile" element={<Profile />} />
       </Route>
     </Routes>
   );

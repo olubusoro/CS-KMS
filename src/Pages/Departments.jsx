@@ -15,7 +15,7 @@ const Departments = () => {
       <Button
       label="New Department"
       onClick={() => setOpen(true)}
-      className='border rounded-xl w-40 cursor-pointer bg-green-500 p-3'
+      className='border rounded-xl w-40 cursor-pointer hover:bg-green-700 bg-green-500 p-3'
       />
       <CreateDepartment
         open={open}
