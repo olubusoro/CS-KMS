@@ -62,8 +62,8 @@ const CreateDepartment = ({ open, onClose, onDepartmentCreated }) => {
         >
           <FaTimes />
         </button>
-        <h2 className="text-xl font-semibold mb-4 text-gray-900 dark:text-white">
-          Create User
+        <h2 className="text-xl font-semibold mb-4 text-gray-900">
+          Create Department
         </h2>
         <form className="space-y-4" onSubmit={handleSubmit}>
           <div>

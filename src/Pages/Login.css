@@ -100,18 +100,17 @@ top: 70%;
 transform: translateY(-50%);
 }
 
-form {
+.login form {
     display: flex;
     flex-direction: column;
 }
 
-label {
+.login label {
     margin-top: 20px;
 }
 
 
-input {
-    padding: 10px;
+.login input {
     width: 400px;
     background-color: #ffffff;
     margin-top: 30px;
@@ -157,6 +156,101 @@ input {
     font-style: italic;
     font-weight: 400;
     font-size: 24px;
+}
+
+/* Add at the end of your Login.css file */
+
+/* Make the main container stack vertically on small screens */
+@media (max-width: 800px) {
+  .card {
+    flex-direction: column;
+    width: 95vw;
+    height: auto;
+    min-height: 100vh;
+    border-width: 8px;
+    border-radius: 24px;
+  }
+  .card-content {
+    padding: 1rem;
+  }
+  .card-body {
+    flex-direction: column;
+    align-items: center;
+    padding: 0;
+  }
+  .login {
+    margin: 0;
+    width: 90vw;
+    max-width: 400px;
+    padding: 10px;
+  }
+  .logo {
+    margin: 2rem 0 0 0;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .logo img {
+    width: 200px;
+    height: 200px;
+  }
+  .logo p {
+    padding-top: 1rem;
+    font-size: 18px;
+  }
+  .login input {
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+  }
+  .btn {
+    margin-left: 0;
+    width: 100%;
+  }
+  .login h1 {
+    margin-left: 0;
+    font-size: 2rem;
+    color: gray;
+  }
+  .title {
+    font-size: 2rem;
+  }
+}
+
+/* For very small screens */
+@media (max-width: 500px) {
+  .card {
+    width: 100vw;
+    min-width: 0;
+    border-width: 4px;
+    border-radius: 10px;
+  }
+  .login > h1 {
+    font-size: 1.5rem;
+    margin-left: 0;
+    color: gray;
+  }
+
+  .login {
+    width: 98vw;
+    padding: 5px;
+  }
+  .logo img {
+    width: 120px;
+    height: 120px;
+  }
+  .title {
+    font-size: 1.2rem;
+  }
+
+  .password input{
+    padding-left: 35px;
+  }
+
+  .email input {
+    padding-left: 35px;
+  }
 }
 
 

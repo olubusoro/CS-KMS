@@ -89,7 +89,7 @@ const CreateUserModal = ({ open, onClose, onUserCreated }) => {
       onClick={handleClose}
     >
       <div
-        className="bg-white rounded-lg shadow-lg w-full max-w-md p-6 relative"
+        className="bg-white rounded-lg shadow-lg w-full max-w-md max-h-[90vh] overflow-y-auto p-6 relative"
         onClick={(e) => e.stopPropagation()}
       >
         <button
@@ -98,7 +98,7 @@ const CreateUserModal = ({ open, onClose, onUserCreated }) => {
         >
           <FaTimes />
         </button>
-        <h2 className="text-xl font-semibold mb-4 text-gray-900 dark:text-white">
+        <h2 className="text-xl font-semibold mb-4 text-gray-900">
           Create User
         </h2>
         <form className="space-y-4" onSubmit={handleSubmit}>
