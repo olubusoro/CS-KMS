@@ -11,6 +11,7 @@
     "postinstall": "flowbite-react patch"
   },
   "dependencies": {
+    "@headlessui/react": "^2.2.4",
     "@lexical/html": "^0.31.2",
     "@lexical/react": "^0.31.2",
     "@lexical/rich-text": "^0.31.2",

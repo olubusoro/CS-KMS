@@ -9,13 +9,8 @@ const TopBar = () => {
 
   return (
     <header className="w-full bg-white shadow flex items-center justify-between px-4 py-2 pb-3 sticky top-0 z-30">
-      {/* Left: Logo */}
-      <div className="flex items-center gap-3">
-        <img
-          src={Logo}
-          alt="Logo"
-          className="h-10 w-10 rounded-full object-cover border-2 border-green-600"
-        />
+      {/* Left: Brand Name */}
+      <div className="flex items-center gap-2">
         <span className="ml-2 font-bold text-lg text-green-700 hidden sm:inline">CS-KMS</span>
       </div>
       {/* Center: Search */}

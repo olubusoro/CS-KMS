@@ -11,7 +11,7 @@ const DashboardLayout = () => {
       <SideBar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
       <div className="flex-1 min-h-screen flex flex-col transition-all duration-300">
         <TopBar />
-        <div className="p-2 sm:p-4">
+        <div className="p-2 h-full sm:p-4">
           <Outlet />
         </div>
       </div>

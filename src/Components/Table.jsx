@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import EditModal from "./EditModal";
 import { BiRotateLeft } from "react-icons/bi";
+import DeleteModal from "./DeleteDialogModal";
 
 const Table = ({ data, title }) => {
   const [editItem, setEditItem] = useState(null);
@@ -85,9 +86,7 @@ const Table = ({ data, title }) => {
                 >
                   Edit
                 </button>
-                <button className="px-1 sm:px-2 md:px-4 py-1 bg-red-500 text-white rounded hover:bg-red-600 transition ml-1 sm:ml-2">
-                  Delete
-                </button>
+                <DeleteModal title={title} />
               </td>
             </tr>
           ))}
