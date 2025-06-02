@@ -9,6 +9,7 @@ const CreateCategory = ({ open, onClose, onCategoryCreated }) => {
 
 
 
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);

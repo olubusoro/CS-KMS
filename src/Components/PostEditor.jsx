@@ -6,9 +6,28 @@ import Button from "../Props/Button";
 const PostEditor = ({onClose}) => {
   const [content, setContent] = useState("");
   const [category, setCategory] = useState("");
+  const [description, setDescription] = useState("");
   const [title, setTitle] = useState("");
   const [file, setFile] = useState(null);
   const [visibility, setVisibility] = useState("public");
+    const [categoryObjects, setCategoryObjects] = useState([]);
+
+  const fetchCategory = async () => {
+    try {
+      const res = await fetch("https://localhost:7161/api/Categories", {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+      const data = await res.json();
+      setCategoryObjects(data);
+    } catch (error) {
+      console.error("Error fetching Categories:", error);
+      setCategoryObjects([{id: 0, Name: "Error fetching Categories"}]);
+      alert("Failed to fetch categories.");
+    }
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -55,11 +74,39 @@ const PostEditor = ({onClose}) => {
     <form onSubmit={handleSubmit} className="space-y-4 p-4">
       <input
         type="text"
-        placeholder="Enter Title"
+        placeholder="Title"
         value={title}
         onChange={(e) => setTitle(e.target.value)}
         className="w-full rounded border p-2"
       />
+      <input
+        type="text"
+        placeholder="Description"
+        value={description}
+        onChange={(e) => setDescription(e.target.value)}
+        className="w-full rounded border p-2"
+      />
+
+      <select
+        className="w-full border rounded px-3 py-2"
+        id="category"
+        multiple
+        value={category}
+        onChange={(e) =>
+          setCategory(
+            Array.from(e.target.selectedOptions, (option) =>
+              Number(option.value)
+            )
+          )
+        }
+        required
+      >
+        {categoryObjects.map((dep) => (
+          <option key={dep.id} value={dep.id}>
+            {dep.Name}
+          </option>
+        ))}
+      </select>
 
       <LexicalEditor onChange={setContent} />
 
