@@ -6,6 +6,8 @@ import Editor from "./Components/PostEditor"
 import Users from "./Pages/Users";
 import Departments from "./Pages/Departments";
 import Profile from "./Pages/Profile";
+import Category from "./Components/Category";
+
 
 function App() {
   return (
@@ -21,6 +23,7 @@ function App() {
         <Route path="users" element={<Users />} />
         <Route path="departments" element={<Departments />} />
         <Route path="profile" element={<Profile />} />
+        <Route path="category" element={<Category />} />
       </Route>
     </Routes>
   );

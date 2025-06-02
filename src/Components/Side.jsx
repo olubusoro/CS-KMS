@@ -53,7 +53,7 @@ const Side = () => {
         label: "Post",
         path: "/dashboardLayout/new-post",
       },
-      {icon: <MdCategory />, label: "Category", path: "/category"},
+      {icon: <MdCategory />, label: "Category", path: "/dashboardLayout/category"},
       {icon: <CgProfile />, label: "Profile", path: "/dashboardLayout/profile"},
     ],
     Staff: [
