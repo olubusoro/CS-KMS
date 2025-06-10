@@ -1,37 +1,63 @@
-import React, { useState } from 'react';
-import { Outlet, useNavigate, useSearchParams } from 'react-router-dom';
-import PostEditor from '../Components/PostEditor';
-import Modal from '../Props/Modal';
-import Button from '../Props/Button';
-
-
+import React, {useState, useEffect} from "react";
+import {Outlet} from "react-router-dom";
+import PostEditor from "../Components/PostEditor";
+import Modal from "../Props/Modal";
+import Button from "../Props/Button";
+import PostList from "../Components/PostList";
 
 const Posts = () => {
-  const [isModalOpen, setIsModalOpen] = useState(false)
-    // const navigate = useNavigate();
-    
-  const handleNewPost = () => {
-    setIsModalOpen(true);
-    // navigate("/dashboardLayout/new-post/Editor");
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [posts, setPosts] = useState([]);
+
+  const fetchPosts = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      const res = await fetch("https://localhost:7161/api/Posts", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      const data = await res.json();
+      const sortedPosts = data.sort(
+        (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+      );
+      setPosts(sortedPosts);
+
+      setPosts(data);
+    } catch (err) {
+      console.error("Error fetching posts:", err);
+    }
   };
-  const closeModal = () => {
-    setIsModalOpen(false)
-  }
+
+  useEffect(() => {
+    fetchPosts();
+  }, []);
+
+  const handleNewPost = () => setIsModalOpen(true);
+  const closeModal = () => setIsModalOpen(false);
+
+  const handlePostCreated = (newPost) => {
+    // Prepend the new post to the list
+    setPosts([newPost, ...posts]);
+    closeModal();
+  };
+
   return (
     <>
       <Button
         label="New Post"
-      onClick={handleNewPost}
-      className='border rounded-xl w-30 cursor-pointer hover:bg-green-700 bg-green-500 p-3'
+        onClick={handleNewPost}
+        className="border rounded-xl w-30 cursor-pointer hover:bg-green-700 bg-green-500 p-3"
       />
+
       <Modal isOpen={isModalOpen} onClose={closeModal}>
-        <PostEditor onClose={closeModal} />
-     </Modal>
-     
- 
-     <Outlet />
+        <PostEditor onClose={closeModal} onPostCreated={handlePostCreated} />
+      </Modal>
+
+      <PostList posts={posts} />
+      <Outlet />
     </>
   );
-}
+};
 
 export default Posts;

@@ -17,7 +17,7 @@ const Profile = () => {
 
         const fetchProfile = async () => {
             try {
-                const res = await fetch("https://localhost:7161/api/users/id", {
+                const res = await fetch(`https://localhost:7161/api/users/${parseInt(localStorage.getItem("userId"))}`, {
                     method: "GET",
                     headers: {
                         Authorization: `Bearer ${token}`,

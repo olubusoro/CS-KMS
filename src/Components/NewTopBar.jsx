@@ -2,10 +2,16 @@ import React, { useState } from "react";
 import { IoIosNotificationsOutline } from "react-icons/io";
 import { CiSettings, CiUser } from "react-icons/ci";
 import Logo from "../assets/Switch.jpeg";
+import Logout from "./Logout";
 
-const TopBar = () => {
+const TopBar = ({onSearch}) => {
   const [search, setSearch] = useState("");
   const [showNotifications, setShowNotifications] = useState(false);
+
+  const handleSearch = (e) => {
+    e.preventDefault()
+    onSearch(search)
+  }
 
   return (
     <header className="w-full bg-white shadow flex items-center justify-between px-4 py-2 pb-3 sticky top-0 z-30">
@@ -14,8 +20,8 @@ const TopBar = () => {
         <span className="ml-2 font-bold text-lg text-green-700 hidden sm:inline">CS-KMS</span>
       </div>
       {/* Center: Search */}
-      <form className="w-2xs mx-auto"  onSubmit={e => e.preventDefault()} >
-        <div className="flex items-center bg-gray-200 rounded-lg px-2 py-2 max-w-md">
+      <form className="w-2xs mx-auto"  onSubmit={handleSearch} >
+        <div className="flex ml-9 items-center bg-gray-200 rounded-lg px-2 py-2 max-w-md">
           <input
             type="text"
             className="flex-1 bg-transparent outline-none px-2 py-2 min-w-2 text-sm focus:outline-none"
@@ -49,12 +55,10 @@ const TopBar = () => {
             <div className="text-sm text-gray-600">No new notifications.</div>
           </div>
         )}
-        <button
+       <Logout
           className="text-2xl text-green-700 hover:text-red-500 transition"
           aria-label="Settings"
-        >
-          <CiSettings />
-        </button>
+        />
         <button
           className="text-2xl text-green-700 hover:text-red-500 transition"
           aria-label="User"

@@ -7,6 +7,9 @@ import Users from "./Pages/Users";
 import Departments from "./Pages/Departments";
 import Profile from "./Pages/Profile";
 import Category from "./Components/Category";
+import PostList from "./Components/PostList";
+import Logs from "./Pages/Logs"
+import ProtectedRoute from "./Components/ProtectedRoute";
 
 
 function App() {
@@ -16,14 +19,20 @@ function App() {
       <Route path="/" element={<Login />} />
 
       {/* Private Layout with Sidebar + Topbar */}
-      <Route path="/dashboardLayout" element={<DashboardLayout />}>
-        < Route path="new-post" element={<Post />} >
+      <Route path="/dashboardLayout" element={
+        <ProtectedRoute>
+          <DashboardLayout />
+        </ProtectedRoute>
+        }>
+        <Route index element={<PostList />} />
+        <Route path="new-post" element={<Post />}>
           <Route path="editor" element={<Editor />} />
-          </Route>
+        </Route>
         <Route path="users" element={<Users />} />
         <Route path="departments" element={<Departments />} />
         <Route path="profile" element={<Profile />} />
         <Route path="category" element={<Category />} />
+        <Route path="logs" element={<Logs />} />
       </Route>
     </Routes>
   );

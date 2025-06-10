@@ -1,16 +1,24 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import LexicalEditor from "./LexicalEditor"; // to import the WYSIWYG Editor
 import Button from "../Props/Button";
 
 
-const PostEditor = ({onClose}) => {
+const PostEditor = ({onClose, onPostCreated}) => {
   const [content, setContent] = useState("");
   const [category, setCategory] = useState("");
   const [description, setDescription] = useState("");
   const [title, setTitle] = useState("");
   const [file, setFile] = useState(null);
   const [visibility, setVisibility] = useState("public");
-    const [categoryObjects, setCategoryObjects] = useState([]);
+  const [categoryObjects, setCategoryObjects] = useState([]);
+
+  
+  useEffect(() => {
+    if (open) {
+      fetchCategory();
+    }
+  }, [open]);
+
 
   const fetchCategory = async () => {
     try {
@@ -39,9 +47,10 @@ const PostEditor = ({onClose}) => {
     const formData = new FormData();
     formData.append("title", title);
     formData.append("content", content);
-    formData.append("category", category);
+    formData.append("categoryId", category);
+    formData.append("userId", 1)
     formData.append("visibility", visibility);
-    if (file) formData.append("file", file);
+    if (file) formData.append("attachments", file);
 
     try {
       const token = localStorage.getItem("token");
@@ -55,12 +64,15 @@ const PostEditor = ({onClose}) => {
       });
 
       if (res.ok) {
+        const newPost = await res.json(); // assuming backend returns the created post
         alert("Post created successfully!");
         setTitle("");
         setContent("");
+        setCategory("");
         setFile(null);
         setVisibility("public");
-        if (onClose) onclose()
+
+        if (onPostCreated) onPostCreated(newPost);
       } else {
         alert("Error creating post");
       }
@@ -88,9 +100,8 @@ const PostEditor = ({onClose}) => {
       />
 
       <select
-        className="w-full border rounded px-3 py-2"
+        className="w-full  border rounded px-3 py-2"
         id="category"
-        multiple
         value={category}
         onChange={(e) =>
           setCategory(
@@ -103,7 +114,7 @@ const PostEditor = ({onClose}) => {
       >
         {categoryObjects.map((dep) => (
           <option key={dep.id} value={dep.id}>
-            {dep.Name}
+            {dep.name}
           </option>
         ))}
       </select>

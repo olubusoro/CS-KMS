@@ -13,7 +13,7 @@ const CreateDepartment = ({ open, onClose, onDepartmentCreated }) => {
     e.preventDefault();
     setLoading(true);
     try {
-      const res = await fetch("https://localhost:7161/api/departments", {
+      const res = await fetch("https://localhost:7161/api/Departments", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

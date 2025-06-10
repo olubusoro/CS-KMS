@@ -40,20 +40,22 @@ const Login = () => {
             "http://schemas.microsoft.com/ws/2008/06/identity/claims/role"
           ];
 
-        const username =
+        const userId =
           decoded.name ||
-          decoded["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name"];
+          decoded[
+            "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier"
+    ];
 
         // Store data in localStorage
         localStorage.setItem("token", token);
         localStorage.setItem("userRole", role);
-        localStorage.setItem("username", username);
+        localStorage.setItem("userId", userId);
 
         alert("Login successful!");
 
         // Navigate to dashboard layout and refresh to load sidebar correctly
         navigate("/dashboardLayout");
-        setTimeout(() => navigate(0), 200); // Refresh after short delay
+        // setTimeout(() => navigate(0), 200); // Refresh after short delay
       } else {
         alert(data.message || "Login failed.");
       }

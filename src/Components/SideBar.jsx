@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
+import Button from "../Props/Button"
 import {
   HiArrowSmRight,
   HiTable,
@@ -17,19 +18,19 @@ const menuConfig = {
     { icon: <MdOutlinePostAdd />, label: "Post", path: "/dashboardLayout/new-post" },
     { icon: <RiGroup3Fill />, label: "Users", path: "/dashboardLayout/users" },
     { icon: <FaPeopleGroup />, label: "Departments", path: "/dashboardLayout/departments" },
-    { icon: <TbReportAnalytics />, label: "Analysis", path: "/analysis" },
-    { icon: <CgProfile />, label: "Profile", path: "/profile" },
+    { icon: <TbReportAnalytics />, label: "Analysis", path: "/dashboardLayout/logs" },
+    { icon: <CgProfile />, label: "Profile", path: "/dashboardLayout/profile" },
     { icon: <HiTable />, label: "Sign Out", path: "/signout" },
   ],
   DeptAdmin: [
     { icon: <MdOutlinePostAdd />, label: "Post", path: "/dashboardLayout/new-post" },
-    { icon: <MdCategory />, label: "Category", path: "/category" },
+    { icon: <MdCategory />, label: "Category", path: "/dashboardLayout/category" },
     { icon: <CgProfile />, label: "Profile", path: "/dashboardLayout/profile" },
   ],
   Staff: [
     { icon: <MdOutlinePostAdd />, label: "Post", path: "/dashboardLayout/new-post" },
-    { icon: <CgProfile />, label: "Profile", path: "/profile" },
-    { icon: <IoIosGitPullRequest />, label: "Access Request", path: "/" },
+    { icon: <CgProfile />, label: "Profile", path: "/dashboardLayout/profile" },
+    { icon: <IoIosGitPullRequest />, label: "Access Request", path: "/dashboardLayout/access" },
   ],
 };
 
@@ -73,7 +74,7 @@ const SideBar = ({ sidebarOpen, setSidebarOpen }) => {
       {/* Sidebar */}
       <aside
         className={`
-          fixed top-0 left-0 z-40 h-screen bg-green-800 text-white flex flex-col justify-between
+          fixed top-0 left-0 z-40 h-screen  bg-green-800 text-white flex flex-col justify-between
           transition-all duration-300
           ${sidebarOpen ? "w-64" : "w-0"}
           overflow-x-hidden
@@ -92,7 +93,7 @@ const SideBar = ({ sidebarOpen, setSidebarOpen }) => {
               className="h-10 w-10 rounded-full object-cover"
             />
             <button
-              className="md:hidden text-2xl"
+              className="md:hidden text-2xl" //if i want to add the cancel button i just remove hidden on medium screen devices 
               onClick={() => setSidebarOpen(false)}
               aria-label="Close sidebar"
             >
@@ -104,12 +105,12 @@ const SideBar = ({ sidebarOpen, setSidebarOpen }) => {
           <nav className="overflow-y-auto mt-2">
             <ul className="space-y-1">
               {menuItems.map((item, idx) => (
-                <li className="mt-2 mb-3.5" key={idx}>
+                <li className="mt-2  mb-3.5" key={idx}>
                   <Link
                     to={item.path}
                     onClick={handleLinkClick}
                     className={`
-                      flex items-center gap-3 px-4 py-2 rounded-lg
+                      flex items-center gap-4 mt-9 px-4 py-2 rounded-lg
                       hover:bg-green-700 transition
                       text-base font-medium
                     `}
@@ -139,13 +140,12 @@ const SideBar = ({ sidebarOpen, setSidebarOpen }) => {
       </aside>
       {/* Hamburger for mobile */}
       {!sidebarOpen && (
-        <button
-          className="md:hidden fixed top-4 left-4 z-50 bg-green-800 text-white border-none rounded p-2 shadow"
+        <Button
+          className="md:hidden fixed top-4 left-4 z-50 bg-green-500 text-white border-none rounded p-2 shadow"
           onClick={() => setSidebarOpen(true)}
           aria-label="Open sidebar"
-        >
-          ☰
-        </button>
+          label="☰"
+        />
       )}
     </>
   );
