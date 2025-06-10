@@ -56,7 +56,7 @@ const Profile = () => {
           <strong>Role:</strong> {profile.role}
         </p>
         <p className="text-gray-600 mb-20">
-          <strong>Department:</strong> {profile.department || "N/A"}
+          <strong>Department:</strong> {profile.departments || "N/A"}
         </p>
         <Button
           label="Change Password"

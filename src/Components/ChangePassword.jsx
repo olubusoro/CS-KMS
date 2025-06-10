@@ -2,13 +2,13 @@ import React, { useState } from "react";
 import Button from "../Props/Button"
 
 const ChangePassword= ({onClose}) => {
-  const [currentPassword, setCurrentPassword] = useState("");
+  const [oldPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
+  const [confirmNewPassword, setConfirmPassword] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (newPassword !== confirmPassword) {
+    if (newPassword !== confirmNewPassword) {
       alert("New passwords do not match.");
       return;
     }
@@ -16,16 +16,17 @@ const ChangePassword= ({onClose}) => {
     const token = localStorage.getItem("token");
     try {
       const res = await fetch(
-        "https://localhost:7161/api/Users/change-password",
+        `https://localhost:7161/api/Users/${parseInt(localStorage.getItem("userId"))}/change-password`,
         {
-          method: "POST",
+          method: "PATCH",
           headers: {
             Authorization: `Bearer ${token}`,
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            currentPassword,
+            oldPassword,
             newPassword,
+            confirmNewPassword
           }),
         }
       );
@@ -46,10 +47,14 @@ const ChangePassword= ({onClose}) => {
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
       <div>
+        <label className="pr-4" htmlFor="">
+          Current Password
+        </label>
         <input
           placeholder="Current Password"
           type="password"
-          value={currentPassword}
+          className="w-full rounded border p-2"
+          value={oldPassword}
           onChange={(e) => setCurrentPassword(e.target.value)}
           required
         />
@@ -58,6 +63,7 @@ const ChangePassword= ({onClose}) => {
         <input
           type="password"
           placeholder="New Password"
+          className="w-full rounded border p-2"
           value={newPassword}
           onChange={(e) => setNewPassword(e.target.value)}
           required
@@ -67,7 +73,8 @@ const ChangePassword= ({onClose}) => {
         <input
           type="password"
           placeholder="Confirm New Password"
-          value={confirmPassword}
+          className="w-full rounded border p-2"
+          value={confirmNewPassword}
           onChange={(e) => setConfirmPassword(e.target.value)}
           required
         />
