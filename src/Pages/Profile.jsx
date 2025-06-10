@@ -41,27 +41,33 @@ const Profile = () => {
 
   return (
     <>
-      <div className="p-6 max-w-md mx-auto bg-white shadow-md rounded">
-        <h2 className="text-xl font-bold mb-4">User Profile</h2>
-        <p>
-        <strong>Name:</strong> {profile.name || profile.fullName}
-      </p>
-      <p>
-        <strong>Email:</strong> {profile.email}
-      </p>
-      <p>
-        <strong>Role:</strong> {profile.role}
-      </p>
-      <p>
-        <strong>Department:</strong> {profile.department || "N/A"}
-      </p>
-         <Button label="Change Password" onClick={openModal} className='bg-green-500 p-4 cursor-pointer hover:bg-green-700 rounded-md' />
+      <div
+        className="p-6
+     max-w-md mx-auto bg-white shadow-md rounded"
+      >
+        <h2 className="text-xl font-bold mb-7 text-center">User Profile</h2>
+        <p className="text-gray-600 mb-10">
+          <strong>Name:</strong> {profile.name || profile.fullName}
+        </p>
+        <p className="text-gray-600 mb-10">
+          <strong>Email:</strong> {profile.email}
+        </p>
+        <p className="text-gray-600 mb-10">
+          <strong>Role:</strong> {profile.role}
+        </p>
+        <p className="text-gray-600 mb-20">
+          <strong>Department:</strong> {profile.department || "N/A"}
+        </p>
+        <Button
+          label="Change Password"
+          onClick={openModal}
+          className="bg-green-500 p-4 cursor-pointer ml-25 hover:bg-green-700 rounded-md"
+        />
 
-      <Modal isOpen={isModalOpen} onClose={closeModal}>
-        <ChangePassword onClose={closeModal} />
-      </Modal>
+        <Modal isOpen={isModalOpen} onClose={closeModal}>
+          <ChangePassword onClose={closeModal} />
+        </Modal>
       </div>
-     
     </>
   );
 }
