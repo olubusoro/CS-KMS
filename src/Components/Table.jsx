@@ -47,10 +47,10 @@ const Table = ({ data, title }) => {
               >
                 {key.charAt(0).toUpperCase() + key.slice(1)}
               </th>
-            ))}
+            ))}{title && title.toLowerCase() === "user" && (
             <th className="px-1 py-1 sm:px-2 sm:py-2 md:px-3 md:py-2 border-b-2 border-gray-200 text-left font-semibold text-gray-700 whitespace-nowrap">
               Actions
-            </th>
+            </th>)}
           </tr>
         </thead>
         <tbody>
@@ -66,7 +66,7 @@ const Table = ({ data, title }) => {
                 >
                   {formatDate(value)}
                 </td>
-              ))}
+              ))}{title && title.toLowerCase() === "user" && (
               <td className="py-1 sm:py-2 border-b border-gray-200 whitespace-nowrap">
                 {title && title.toLowerCase() === "user" && (
                   <a
@@ -87,7 +87,7 @@ const Table = ({ data, title }) => {
                   Edit
                 </button>
                 <DeleteModal title={title} />
-              </td>
+              </td>)}
             </tr>
           ))}
         </tbody>
