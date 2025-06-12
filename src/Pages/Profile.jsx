@@ -23,7 +23,7 @@ const Profile = () => {
 
         const fetchProfile = async () => {
             try {
-                const res = await fetch(`https://localhost:7161/api/users/${parseInt(localStorage.getItem("userId"))}`, {
+                const res = await fetch(`https://localhost:7161/api/users/profile`, {
                     method: "GET",
                     headers: {
                         Authorization: `Bearer ${token}`,
@@ -33,6 +33,7 @@ const Profile = () => {
                 if (res.ok) {
                     const data = await res.json();
                     setProfile(data);
+                    console.log("Profile fetched successfully", data);
                 } else {
                     alert("failed to load profile ");
                 }
@@ -62,7 +63,10 @@ const Profile = () => {
           <strong>Role:</strong> {roles[profile.role]}
         </p>
         <p className="text-gray-600 mb-20">
-          <strong>Department:</strong> {profile.departments || "N/A"}
+          <strong>Department/s:</strong>{" "}
+          {Array.isArray(profile.departmentNames)
+            ? profile.departmentNames.join(", ")
+            : profile.departmentNames || "N/A"}
         </p>
         <Button
           label="Change Password"
