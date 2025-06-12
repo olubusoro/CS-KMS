@@ -12,7 +12,7 @@ const CreateUserModal = ({ open, onClose, onUserCreated }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [role, setRole] = useState(0);
-  const [departments, setDepartments] = useState([]);
+  const [departmentIds, setDepartmentIds] = useState([]);
   const [departmentsObjects, setDepartmentsObjects] = useState([]);
   const [loading, setLoading] = useState(false);
 
@@ -54,7 +54,7 @@ const CreateUserModal = ({ open, onClose, onUserCreated }) => {
           email,
           password,
           role,
-          departments,
+          departmentIds,
         }),
       });
       const data = await res.json();
@@ -77,7 +77,7 @@ const CreateUserModal = ({ open, onClose, onUserCreated }) => {
     setEmail("");
     setPassword("");
     setRole(0);
-    setDepartments([]);
+    setDepartmentIds([]);
     onClose();
   };
 
@@ -175,9 +175,9 @@ const CreateUserModal = ({ open, onClose, onUserCreated }) => {
               className="w-full border rounded px-3 py-2"
               id="departments"
               multiple
-              value={departments}
+              value={departmentIds}
               onChange={(e) =>
-                setDepartments(
+                setDepartmentIds(
                   Array.from(e.target.selectedOptions, (option) =>
                     Number(option.value)
                   )
