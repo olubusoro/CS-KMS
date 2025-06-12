@@ -22,7 +22,7 @@ const TiptapEditor = ({onChange}) => {
 
   return (
     <div className="border rounded p-4">
-      <div className="mb-2 space-x-2">
+      <div className="mb-2 w-full h-full space-x-2">
         <button
           type="button"
           onClick={() => editor.chain().focus().toggleBold().run()}

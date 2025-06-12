@@ -187,7 +187,7 @@ const CreateUserModal = ({ open, onClose, onUserCreated }) => {
             >
               {departmentsObjects.map((dep) => (
                 <option key={dep.id} value={dep.id}>
-                  {dep.Name}
+                  {dep.name}
                 </option>
               ))}
             </select>

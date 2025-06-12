@@ -3,6 +3,12 @@ import Button from "../Props/Button"
 import Modal from '../Props/Modal';
 import ChangePassword from '../Components/ChangePassword';
 
+const roles = {
+  0: "staff",
+  1: "Department Admin",
+  2: "Super Admin"
+}
+
 
 const Profile = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -53,7 +59,7 @@ const Profile = () => {
           <strong>Email:</strong> {profile.email}
         </p>
         <p className="text-gray-600 mb-10">
-          <strong>Role:</strong> {profile.role}
+          <strong>Role:</strong> {roles[profile.role]}
         </p>
         <p className="text-gray-600 mb-20">
           <strong>Department:</strong> {profile.departments || "N/A"}
