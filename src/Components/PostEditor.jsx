@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from "react";
 import LexicalEditor from "./LexicalEditor"; // to import the WYSIWYG Editor
 import Button from "../Props/Button";
-import TiptapEditor from "./TiptapEditor";
+import TiptapEditor from "./TiptapEditor"; //import another WYSIWYG Editor, i'll probably delete one 
 
 
 const PostEditor = ({onClose, onPostCreated}) => {
@@ -123,12 +123,7 @@ const PostEditor = ({onClose, onPostCreated}) => {
       <LexicalEditor onChange={setContent} />
       {/* <TiptapEditor onChange={setContent} /> */}
 
-      {/* <input
-        type="file"
-        accept=".pdf,.docx,.doc,image/*"
-        onChange={(e) => setFile(e.target.files[0])}
-        className=""
-      /> */}
+   
       <input
         type="file"
         id="fileUpload"
