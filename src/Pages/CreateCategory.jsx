@@ -1,13 +1,25 @@
 import React, { useState} from "react";
 import Button from '../Props/Button'
 import {FaTimes} from "react-icons/fa";
+import FetchData from "../Utils/FetchData";
 
 const CreateCategory = ({ open, onClose, onCategoryCreated }) => {
   const [name, setName] = useState("");
-  const [category, setCategory] = useState("");
+  const [departmentId, setDepartmentId] = useState(0);
+  const [description, setDescription] = useState("");
   const [loading, setLoading] = useState(false);
 
-
+  React.useEffect(() => {
+    if (open) {
+      const fetchData = async () => {
+        const data = await FetchData("https://localhost:7161/api/users/profile");
+        if (data && data.departmentIds && data.departmentIds.length > 0) {
+          setDepartmentId(data.departmentIds[0]);
+        }
+      };
+      fetchData();
+    }
+  }, [open]);
 
 
   const handleSubmit = async (e) => {
@@ -22,7 +34,8 @@ const CreateCategory = ({ open, onClose, onCategoryCreated }) => {
         },
         body: JSON.stringify({
           name,
-          category,
+          description,
+          departmentId
         }),
       });
       const data = await res.json();
@@ -42,7 +55,7 @@ const CreateCategory = ({ open, onClose, onCategoryCreated }) => {
 
   const handleClose = () => {
     setName("");
-    setCategory("");
+    setDescription("");
     onClose();
   };
 
@@ -87,8 +100,8 @@ const CreateCategory = ({ open, onClose, onCategoryCreated }) => {
             <input
               className="w-full border rounded px-3 py-2"
               id="description"
-              value={category}
-              onChange={(e) => setCategory(e.target.value)}
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
               required
               placeholder="Description of the Category"
             />

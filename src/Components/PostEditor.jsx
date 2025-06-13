@@ -6,37 +6,69 @@ import TiptapEditor from "./TiptapEditor"; //import another WYSIWYG Editor, i'll
 
 const PostEditor = ({onClose, onPostCreated}) => {
   const [content, setContent] = useState("");
+  const [department, setDepartment] = useState("");
   const [category, setCategory] = useState("");
   const [description, setDescription] = useState("");
   const [title, setTitle] = useState("");
   const [file, setFile] = useState(null);
   const [visibility, setVisibility] = useState("public");
   const [categoryObjects, setCategoryObjects] = useState([]);
+  const [departmentIds, setDepartmentIds] = useState([]);
+  const [departmentId, setDepartmentId] = useState(0);
+  const [departmentNames, setDepartmentNames] = useState([]);
 
   
   useEffect(() => {
-    if (open) {
-      fetchCategory();
-    }
+      if (open) {
+        const fetchData = async () => {
+          const data = await fetchUser();
+          setDepartmentIds(data.departmentIds)
+          setDepartmentNames(data.departmentNames)
+          await fetchDepartment(data.departmentIds[0]);
+        };
+        fetchData();
+      }
   }, [open]);
 
-
-  const fetchCategory = async () => {
+const fetchUser = async () => {
     try {
-      const res = await fetch("https://localhost:7161/api/Categories", {
+        const ires = await fetch("https://localhost:7161/api/users/profile",{
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${localStorage.getItem("token")}`,
+              }
+            });
+          const user = await ires.json();
+          console.log("User fetched successfully");
+          return user;
+          // setDepartmentIds(user.departmentIds);
+          // setDepartmentNames(user.departmentNames);
+          
+        }catch (error) {
+          console.error("Error fetching user:", error);
+        }
+      }
+
+  const fetchDepartment = async (deptId) => {
+    try { 
+      const res = await fetch(`https://localhost:7161/api/Departments/${deptId}`, {
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
+          // Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       });
       const data = await res.json();
-      setCategoryObjects(data);
-    } catch (error) {
-      console.error("Error fetching Categories:", error);
-      setCategoryObjects([{id: 0, Name: "Error fetching Categories"}]);
-      alert("Failed to fetch categories.");
+      if(res.ok) {
+        console.log("Department fetched successfully",data);
+        setDepartment(data);
+        setCategoryObjects(data.categories || [{id: 0, Name: "Error fetching Categories"}]);
+     }
+    }catch (error) {
+      console.error("Error fetching Departments:", error);
+      setDepartment([{id: 0, Name: "Error fetching Departments"}]);
+      alert("Failed to fetch departments.");
     }
-  };
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -47,9 +79,9 @@ const PostEditor = ({onClose, onPostCreated}) => {
 
     const formData = new FormData();
     formData.append("title", title);
+    formData.append("description", description);
     formData.append("content", content);
     formData.append("categoryId", category);
-    formData.append("userId", 1)
     formData.append("visibility", visibility);
     if (file) formData.append("attachments", file);
 
@@ -68,6 +100,7 @@ const PostEditor = ({onClose, onPostCreated}) => {
         const newPost = await res.json(); // assuming backend returns the created post
         alert("Post created successfully!");
         setTitle("");
+        setDescription("");
         setContent("");
         setCategory("");
         setFile(null);
@@ -100,35 +133,52 @@ const PostEditor = ({onClose, onPostCreated}) => {
         className="w-full rounded border p-2"
       />
 
+      {/* Show department select only if more than one department */}
+      {departmentIds.length > 1 && (
+        <>
+          <label htmlFor="department" className="block mb-2 text-sm font-medium">
+            Select Department
+          </label>
+          <select
+            className="w-full border rounded px-3 py-2"
+            id="department"
+            value={departmentId}
+            onChange={async (e) => {
+              setDepartmentId(e.target.value);
+              await fetchDepartment(e.target.value);
+            }}
+            required
+          >
+            {departmentIds.map((dept, i) => (
+              <option key={dept} value={dept}>
+                {departmentNames[i] || `Department ${dept}`}
+              </option>
+            ))}
+          </select>
+        </>
+      )}
+
       <select
-        className="w-full  border rounded px-3 py-2"
+        className="w-full border rounded px-3 py-2"
         id="category"
         value={category}
-        onChange={(e) =>
-          setCategory(
-            Array.from(e.target.selectedOptions, (option) =>
-              Number(option.value)
-            )
-          )
-        }
+        onChange={(e) => setCategory(e.target.value)}
         required
       >
-        {categoryObjects.map((dep) => (
-          <option key={dep.id} value={dep.id}>
-            {dep.name}
+        {categoryObjects.map((cat) => (
+          <option key={cat.id} value={cat.id}>
+            {cat.name}
           </option>
         ))}
       </select>
 
       <LexicalEditor onChange={setContent} />
-      {/* <TiptapEditor onChange={setContent} /> */}
 
-   
       <input
         type="file"
         id="fileUpload"
         onChange={(e) => setFile(e.target.files[0])}
-        class="block w-full border border-gray-300 rounded-lg p-2 text-gray-700 file:bg-green-500 file:text-white file:px-4 file:py-2 file:rounded-lg file:border-none file:cursor-pointer"
+        className="block w-full border border-gray-300 rounded-lg p-2 text-gray-700 file:bg-green-500 file:text-white file:px-4 file:py-2 file:rounded-lg file:border-none file:cursor-pointer"
       />
 
       <select
