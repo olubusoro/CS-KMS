@@ -6,6 +6,8 @@ import FetchData from "../Utils/FetchData";
 const CreateCategory = ({ open, onClose, onCategoryCreated }) => {
   const [name, setName] = useState("");
   const [departmentId, setDepartmentId] = useState(0);
+  const [departmentIds, setDepartmentIds] = useState([]);
+  const [departmentNames, setDepartmentNames] = useState([]);
   const [description, setDescription] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -15,6 +17,8 @@ const CreateCategory = ({ open, onClose, onCategoryCreated }) => {
         const data = await FetchData("https://localhost:7161/api/users/profile");
         if (data && data.departmentIds && data.departmentIds.length > 0) {
           setDepartmentId(data.departmentIds[0]);
+          setDepartmentIds(data.departmentIds);
+          setDepartmentNames(data.departmentNames);
         }
       };
       fetchData();
@@ -93,6 +97,26 @@ const CreateCategory = ({ open, onClose, onCategoryCreated }) => {
               placeholder="John Doe"
             />
           </div>
+          {departmentIds.length > 1 && (
+            <div>
+              <label className="block mb-1 text-sm font-medium" htmlFor="department">
+                Select Department
+              </label>
+              <select
+                className="w-full border rounded px-3 py-2"
+                id="department"
+                value={departmentId}
+                onChange={(e) => setDepartmentId(e.target.value)}
+                required
+              >
+                {departmentIds.map((dept, i) => (
+                  <option key={dept} value={dept}>
+                    {departmentNames[i] || `Department ${dept}`}
+                  </option>
+                ))}
+              </select>
+            </div>
+          )}
           <div>
             <label className="block mb-1 text-sm font-medium" htmlFor="email">
               Description

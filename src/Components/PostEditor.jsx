@@ -62,6 +62,12 @@ const fetchUser = async () => {
         console.log("Department fetched successfully",data);
         setDepartment(data);
         setCategoryObjects(data.categories || [{id: 0, Name: "Error fetching Categories"}]);
+        // Set the first category as default if available
+      if (data.categories && data.categories.length > 0) {
+        setCategory(data.categories[0].id);
+      } else {
+        setCategory(""); // or 0 if you prefer
+      }
      }
     }catch (error) {
       console.error("Error fetching Departments:", error);
@@ -81,9 +87,14 @@ const fetchUser = async () => {
     formData.append("title", title);
     formData.append("description", description);
     formData.append("content", content);
-    formData.append("categoryId", category);
+    formData.append("categoryId", parseInt(category));
     formData.append("visibility", visibility);
-    if (file) formData.append("attachments", file);
+    if (file){ formData.append("attachments", file);
+      const categoryName = categoryObjects.find(cat => cat.id === parseInt(category))?.name;
+      const departmentName = department.name || "General";
+      formData.append("departmentName", departmentName);
+      formData.append("categoryName", categoryName);
+    };
 
     try {
       const token = localStorage.getItem("token");
