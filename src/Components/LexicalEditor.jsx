@@ -4,10 +4,12 @@ import {RichTextPlugin} from "@lexical/react/LexicalRichTextPlugin";
 import {ContentEditable} from "@lexical/react/LexicalContentEditable";
 import {HistoryPlugin} from "@lexical/react/LexicalHistoryPlugin";
 import {OnChangePlugin} from "@lexical/react/LexicalOnChangePlugin";
-import {ToolbarPlugin} from "./ToolbarPlugin";
+import {ToolbarPlugin} from "./ToolBarPlugin";
 import {$generateHtmlFromNodes} from "@lexical/html";
 import {LexicalErrorBoundary} from "@lexical/react/LexicalErrorBoundary";
 import "./LexicalEditor.css";
+import {ListNode, ListItemNode} from "@lexical/list";
+import {HeadingNode, QuoteNode} from "@lexical/rich-text";
 
 const editorConfig = {
   namespace: "PostEditor",
@@ -18,7 +20,7 @@ const editorConfig = {
   onError(error) {
     console.error("Lexical Error:", error);
   },
-  nodes: [],
+  nodes: [HeadingNode, ListNode, ListItemNode, QuoteNode],
 };
 
 const LexicalEditor = ({onChange}) => {

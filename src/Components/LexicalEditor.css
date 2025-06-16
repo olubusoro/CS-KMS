@@ -1,64 +1,36 @@
-/* .editor-container {
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    padding: 1rem;
-    max-height: 350px;
-    overflow-y: auto;
-    background: white;
-  }
-  
-  
-  
+.editor-wrapper {
+  border: 1px solid #ccc;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  background: #fff;
+  max-width: 100%;
+}
 
-  
-  .toolbar button {
-    background: white;
-    border: 1px solid #ccc;
-    padding: 4px 8px;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-   */
-   .editor-wrapper {
-    border: 1px solid #ccc;
-    border-radius: 6px;
-    padding: 8px;
-    min-height: 300px;
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .editor-input {
-    min-height: 200px;
-    max-height: 300px;
-    overflow-y: auto;
-    outline: none;
-    padding: 8px;
-    border-radius: 4px;
-  }
-  
-  .editor-placeholder {
-    color: #999;
-    padding: 8px;
-    position: absolute;
-    pointer-events: none;
-  }
-  
-  .toolbar {
-    display: flex;
-    gap: 8px;
-    padding: 4px 0;
-  }
-  
-  .toolbar button {
-    padding: 4px 8px;
-    border: 1px solid #ddd;
-    background-color: white;
-    cursor: pointer;
-    border-radius: 4px;
-  }
-  
-  .toolbar button:hover {
-    background-color: #f0f0f0;
-  }
-  
+.editor-input {
+  min-height: 200px;
+  width: 100%;
+  padding: 1rem;
+  outline: none;
+  resize: vertical;
+  overflow-y: auto;
+
+  /* Key text wrapping settings */
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  line-height: 1.6;
+}
+
+.editor-placeholder {
+  position: absolute;
+  opacity: 0.6;
+  pointer-events: none;
+  padding-left: 1rem;
+  padding-top: 1rem;
+  color: #999;
+}
+
+.editor-paragraph {
+  margin: 0;
+  padding: 0;
+}

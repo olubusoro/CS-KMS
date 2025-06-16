@@ -2,6 +2,12 @@ import React, {useState, useEffect} from "react";
 import LexicalEditor from "./LexicalEditor"; // to import the WYSIWYG Editor
 import Button from "../Props/Button";
 import TiptapEditor from "./TiptapEditor"; //import another WYSIWYG Editor, i'll probably delete one 
+import FroalaEditor from "react-froala-wysiwyg"
+import FroalaEditorComponent from "react-froala-wysiwyg";
+import "froala-editor/css/froala_style.min.css";
+import "froala-editor/css/froala_editor.pkgd.min.css";
+import "froala-editor/js/plugins/image.min.js";
+
 
 
 const PostEditor = ({onClose, onPostCreated}) => {
@@ -147,7 +153,10 @@ const fetchUser = async () => {
       {/* Show department select only if more than one department */}
       {departmentIds.length > 1 && (
         <>
-          <label htmlFor="department" className="block mb-2 text-sm font-medium">
+          <label
+            htmlFor="department"
+            className="block mb-2 text-sm font-medium"
+          >
             Select Department
           </label>
           <select
@@ -183,7 +192,29 @@ const fetchUser = async () => {
         ))}
       </select>
 
-      <LexicalEditor onChange={setContent} />
+      {/* <LexicalEditor onChange={setContent} /> */}
+      <FroalaEditorComponent
+        tag="textarea"
+        model={content}
+        onModelChange={(newContent) => setContent(newContent)}
+        config={{
+          placeholderText: "Type your content here...",
+          imageUpload: true, // turn off external upload
+          imagePaste: true,
+          imageDefaultWidth: 0,
+          imageInsertButtons: ["imageBack", "|", "imageUpload", "imageByURL"],
+          imageUploadParam: "file",
+          imageAllowedTypes: ["jpeg", "jpg", "png", "gif"],
+          imageMaxSize: 5 * 1024 * 1024,
+          imageUploadMethod: "POST",
+          imageUploadToS3: false,
+          imageEditButtons: ["imageReplace", "imageAlign", "imageRemove"],
+          useClasses: false,
+          imageOutputType: "base64", // 
+        }}
+      />
+
+      {/* <TiptapEditor /> */}
 
       <input
         type="file"
