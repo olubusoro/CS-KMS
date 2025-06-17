@@ -1,17 +1,22 @@
 import React, {useState, useEffect} from "react";
-import LexicalEditor from "./LexicalEditor"; // to import the WYSIWYG Editor
 import Button from "../Props/Button";
-import TiptapEditor from "./TiptapEditor"; //import another WYSIWYG Editor, i'll probably delete one 
-import FroalaEditor from "react-froala-wysiwyg"
-import FroalaEditorComponent from "react-froala-wysiwyg";
-import "froala-editor/css/froala_style.min.css";
-import "froala-editor/css/froala_editor.pkgd.min.css";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
 import "froala-editor/js/plugins/image.min.js";
 
 
 
-const PostEditor = ({onClose, onPostCreated}) => {
+const PostEditor = ({ onClose, onPostCreated }) => {
   const [content, setContent] = useState("");
+
+  const modules = {
+    toolbar: [
+      ["bold", "italic", "underline"],
+      [{list: "ordered"}, {list: "bullet"}],
+      ["link", "image"], 
+    ],
+  };
+
   const [department, setDepartment] = useState("");
   const [category, setCategory] = useState("");
   const [description, setDescription] = useState("");
@@ -47,8 +52,7 @@ const fetchUser = async () => {
           const user = await ires.json();
           console.log("User fetched successfully");
           return user;
-          // setDepartmentIds(user.departmentIds);
-          // setDepartmentNames(user.departmentNames);
+         
           
         }catch (error) {
           console.error("Error fetching user:", error);
@@ -192,29 +196,13 @@ const fetchUser = async () => {
         ))}
       </select>
 
-      {/* <LexicalEditor onChange={setContent} /> */}
-      <FroalaEditorComponent
-        tag="textarea"
-        model={content}
-        onModelChange={(newContent) => setContent(newContent)}
-        config={{
-          placeholderText: "Type your content here...",
-          imageUpload: true, // turn off external upload
-          imagePaste: true,
-          imageDefaultWidth: 0,
-          imageInsertButtons: ["imageBack", "|", "imageUpload", "imageByURL"],
-          imageUploadParam: "file",
-          imageAllowedTypes: ["jpeg", "jpg", "png", "gif"],
-          imageMaxSize: 5 * 1024 * 1024,
-          imageUploadMethod: "POST",
-          imageUploadToS3: false,
-          imageEditButtons: ["imageReplace", "imageAlign", "imageRemove"],
-          useClasses: false,
-          imageOutputType: "base64", // 
-        }}
+      <ReactQuill
+        value={content}
+        onChange={setContent}
+        modules={modules}
+        theme="snow"
       />
-
-      {/* <TiptapEditor /> */}
+    
 
       <input
         type="file"
