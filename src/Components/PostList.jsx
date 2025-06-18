@@ -8,6 +8,7 @@ const PostList = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const postsPerPage = 11;
   const { searchTerm} = useOutletContext()
+  const [attachmentUrls, setAttachmentUrls] = useState({});
 
   useEffect(() => {
     setCurrentPage(1); // Reset to first page on search
@@ -49,6 +50,44 @@ const PostList = () => {
   const indexOfLastPost = currentPage * postsPerPage;
   const indexOfFirstPost = indexOfLastPost - postsPerPage;
   const currentPosts = filteredPosts.slice(indexOfFirstPost, indexOfLastPost);
+
+  const getAttachmentUrl = async (PostId, AttachmnetId, contentType) => {
+    try {
+      const res = await fetch(
+        `https://localhost:7161/api/Posts/${PostId}/attachments/${AttachmnetId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+            "Content-Type": contentType,
+          },
+        }
+      );
+      if (res.ok) {
+        const blob = await res.blob();
+        const url = URL.createObjectURL(blob);
+        console.log("Attachment URL:", url);
+        return url;
+      } else {
+        console.error("Failed to fetch attachment URL");
+      }
+    } catch (error) {
+      console.error("Failed to fetch attachment URL:", error);
+      return null;
+    }
+  }
+
+  useEffect(() => {
+    const fetchUrls = async () => {
+      if (selectedPost && selectedPost.attachments.length > 0) {
+        const urls = {};
+        for (const attachment of selectedPost.attachments) {
+          urls[attachment.id] = await getAttachmentUrl(selectedPost.id, attachment.id, attachment.contentType);
+        }
+        setAttachmentUrls(urls);
+      }
+    };
+    fetchUrls();
+  }, [selectedPost]);
 
   return (
     <div className="p-4 space-y-4">
@@ -97,15 +136,23 @@ const PostList = () => {
               className="prose max-w-none"
               dangerouslySetInnerHTML={{__html: selectedPost.content}}
             />
-            {selectedPost.filePath && (
-              <a
-                href={selectedPost.filePath}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-blue-600 underline mt-4 block"
-              >
-                📎 View Attachment
-              </a>
+            {selectedPost.attachments.length > 0 && (
+              selectedPost.attachments.map((attachment) => {
+                const ext = attachment.originalFileName.split('.').pop().toLowerCase();
+                const isDocx = ext === "docx";
+                return (
+                  <span className="block">📎
+                  <a
+                    key={attachment.id}
+                    href={attachmentUrls[attachment.id] || "#"}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-blue-600 underline mt-4"
+                  >
+                     {isDocx ? "Download" : "View"} {attachment.originalFileName}
+                  </a></span>
+                );
+              })
             )}
           </div>
         )}
