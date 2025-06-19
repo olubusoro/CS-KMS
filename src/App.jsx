@@ -10,6 +10,7 @@ import Category from "./Components/Category";
 import PostList from "./Components/PostList";
 import Logs from "./Pages/Logs"
 import ProtectedRoute from "./Components/ProtectedRoute";
+import Requests from "./Components/AccessRequest"
 
 
 function App() {
@@ -33,6 +34,7 @@ function App() {
         <Route path="profile" element={<Profile />} />
         <Route path="category" element={<Category />} />
         <Route path="logs" element={<Logs />} />
+        <Route path="requests" element={<Requests />} />
       </Route>
     </Routes>
   );

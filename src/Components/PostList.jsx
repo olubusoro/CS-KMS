@@ -7,7 +7,7 @@ const PostList = () => {
   const [selectedPost, setSelectedPost] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const postsPerPage = 11;
-  const { searchTerm} = useOutletContext()
+  const {searchTerm} = useOutletContext();
   const [attachmentUrls, setAttachmentUrls] = useState({});
   const [reason, setReason] = useState("");
   const [postId, setPostId] = useState(0);
@@ -17,7 +17,6 @@ const PostList = () => {
   useEffect(() => {
     setCurrentPage(1); // Reset to first page on search
   }, [searchTerm]);
-  
 
   const fetchPosts = async () => {
     try {
@@ -43,7 +42,6 @@ const PostList = () => {
     fetchPosts();
   }, []);
 
-
   const filteredPosts = posts.filter(
     (post) =>
       post.title?.toLowerCase().includes(searchTerm?.toLowerCase()) ||
@@ -56,24 +54,27 @@ const PostList = () => {
   const currentPosts = filteredPosts.slice(indexOfFirstPost, indexOfLastPost);
 
   const handlePostClick = async (post) => {
-    await fetch(
-      `${baseUrl}/api/Posts/${post.id}`,
-      {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-          "ContentType": "application/json",
-        },
-      }).then((res) => res.json()).then((data) => {
-      setSelectedPost(data)}).catch((error) => {
-      console.error("Failed to fetch post details:", error);});
-  }
+    await fetch(`${baseUrl}/api/Posts/${post.id}`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+        ContentType: "application/json",
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        setSelectedPost(data);
+      })
+      .catch((error) => {
+        console.error("Failed to fetch post details:", error);
+      });
+  };
 
   const handleRequestAccess = async () => {
     if (!reason.trim()) {
       alert("Please provide a reason for the access request.");
       return;
     }
-    await fetch(`${baseUrl}/api/access-requests`,{
+    await fetch(`${baseUrl}/api/access-requests`, {
       method: "POST",
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -81,19 +82,22 @@ const PostList = () => {
       },
       body: JSON.stringify({
         postId: postId,
-        reason: reason
+        reason: reason,
       }),
-    }).then((res) => res.json()).then((data) => {
-      alert(data.message || "Access request sent successfully!");
-      setSelectedPost((prev) => ({
-        ...prev,
-        accessRequestStatus: "Requested",
-      }));
-    }).catch((error) => {
-      console.error("Failed to send access request:", error);
-      alert("An error occurred while sending the access request.");
-    });
-  }
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        alert(data.message || "Access request sent successfully!");
+        setSelectedPost((prev) => ({
+          ...prev,
+          accessRequestStatus: "Requested",
+        }));
+      })
+      .catch((error) => {
+        console.error("Failed to send access request:", error);
+        alert("An error occurred while sending the access request.");
+      });
+  };
 
   const getAttachmentUrl = async (PostId, AttachmentId, contentType) => {
     try {
@@ -118,14 +122,18 @@ const PostList = () => {
       console.error("Failed to fetch attachment URL:", error);
       return null;
     }
-  }
+  };
 
   useEffect(() => {
     const fetchUrls = async () => {
       if (selectedPost?.post && selectedPost.post.attachments.length > 0) {
         const urls = {};
         for (const attachment of selectedPost.post.attachments) {
-          urls[attachment.id] = await getAttachmentUrl(selectedPost.post.id, attachment.id, attachment.contentType);
+          urls[attachment.id] = await getAttachmentUrl(
+            selectedPost.post.id,
+            attachment.id,
+            attachment.contentType
+          );
         }
         setAttachmentUrls(urls);
       }
@@ -144,7 +152,8 @@ const PostList = () => {
           <div
             key={post.id}
             className="bg-white shadow-md rounded p-4 cursor-pointer hover:bg-gray-100"
-            onClick={() => {handlePostClick(post);
+            onClick={() => {
+              handlePostClick(post);
               setPostId(post.id);
             }}
           >
@@ -182,21 +191,26 @@ const PostList = () => {
                 <p className="text-gray-600">{selectedPost.post.description}</p>
                 <div
                   className="prose max-w-none"
-                  dangerouslySetInnerHTML={{ __html: selectedPost.post.content }}
+                  dangerouslySetInnerHTML={{__html: selectedPost.post.content}}
                 />
                 {selectedPost.post.attachments.length > 0 &&
                   selectedPost.post.attachments.map((attachment) => {
-                    const ext = attachment.originalFileName.split('.').pop().toLowerCase();
+                    const ext = attachment.originalFileName
+                      .split(".")
+                      .pop()
+                      .toLowerCase();
                     const isDocx = ext === "docx";
                     return (
-                      <span className="block" key={attachment.id}>📎
+                      <span className="block" key={attachment.id}>
+                        📎
                         <a
                           href={attachmentUrls[attachment.id] || "#"}
                           target="_blank"
                           rel="noopener noreferrer"
                           className="text-blue-600 underline mt-4"
                         >
-                          {isDocx ? "Download" : "View"} {attachment.originalFileName}
+                          {isDocx ? "Download" : "View"}{" "}
+                          {attachment.originalFileName}
                         </a>
                       </span>
                     );
@@ -204,7 +218,9 @@ const PostList = () => {
               </>
             ) : selectedPost.accessRequestStatus === "NotRequested" ? (
               <div className="flex flex-col items-center justify-center min-h-[200px]">
-                <p className="text-red-600 text-lg mb-4">Access Denied: You do not have permission to view this post.</p>
+                <p className="text-red-600 text-lg mb-4">
+                  Access Denied: You do not have permission to view this post.
+                </p>
                 <input
                   type="text"
                   placeholder="Reason for access request"
@@ -212,7 +228,7 @@ const PostList = () => {
                   onChange={(e) => setReason(e.target.value)}
                   required
                   value={reason}
-                  />
+                />
                 <button
                   className="bg-green-600 text-white px-6 py-3 rounded shadow"
                   onClick={() => {
@@ -225,7 +241,9 @@ const PostList = () => {
               </div>
             ) : (
               <div className="flex flex-col items-center justify-center min-h-[200px]">
-                <p className="text-gray-700 text-lg">Access Request Status: {selectedPost.accessRequestStatus}</p>
+                <p className="text-gray-700 text-lg">
+                  Access Request Status: {selectedPost.accessRequestStatus}
+                </p>
               </div>
             )}
           </div>

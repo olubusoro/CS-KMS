@@ -15,22 +15,59 @@ import Logo from "../assets/Switch.jpeg";
 
 const menuConfig = {
   SuperAdmin: [
-    { icon: <MdOutlinePostAdd />, label: "Post", path: "/dashboardLayout/new-post" },
-    { icon: <RiGroup3Fill />, label: "Users", path: "/dashboardLayout/users" },
-    { icon: <FaPeopleGroup />, label: "Departments", path: "/dashboardLayout/departments" },
-    { icon: <TbReportAnalytics />, label: "Analysis", path: "/dashboardLayout/logs" },
-    { icon: <CgProfile />, label: "Profile", path: "/dashboardLayout/profile" },
-    { icon: <HiTable />, label: "Sign Out", path: "/signout" },
+    {
+      icon: <MdOutlinePostAdd />,
+      label: "Post",
+      path: "/dashboardLayout/new-post",
+    },
+    {icon: <RiGroup3Fill />, label: "Users", path: "/dashboardLayout/users"},
+    {
+      icon: <FaPeopleGroup />,
+      label: "Departments",
+      path: "/dashboardLayout/departments",
+    },
+    {
+      icon: <TbReportAnalytics />,
+      label: "Analysis",
+      path: "/dashboardLayout/logs",
+    },
+    {icon: <CgProfile />, label: "Profile", path: "/dashboardLayout/profile"},
+    {
+      icon: <IoIosGitPullRequest />,
+      label: "Access-Requests",
+      path: "/dashboardLayout/requests",
+    },
   ],
   DeptAdmin: [
-    { icon: <MdOutlinePostAdd />, label: "Post", path: "/dashboardLayout/new-post" },
-    { icon: <MdCategory />, label: "Category", path: "/dashboardLayout/category" },
-    { icon: <CgProfile />, label: "Profile", path: "/dashboardLayout/profile" },
+    {
+      icon: <MdOutlinePostAdd />,
+      label: "Post",
+      path: "/dashboardLayout/new-post",
+    },
+    {
+      icon: <MdCategory />,
+      label: "Category",
+      path: "/dashboardLayout/category",
+    },
+    {icon: <CgProfile />, label: "Profile", path: "/dashboardLayout/profile"},
+    {
+      icon: <IoIosGitPullRequest />,
+      label: "Access-Requests",
+      path: "/dashboardLayout/requests",
+    },
   ],
   Staff: [
-    { icon: <MdOutlinePostAdd />, label: "Post", path: "/dashboardLayout/new-post" },
-    { icon: <CgProfile />, label: "Profile", path: "/dashboardLayout/profile" },
-    { icon: <IoIosGitPullRequest />, label: "Access Request", path: "/dashboardLayout/access" },
+    {
+      icon: <MdOutlinePostAdd />,
+      label: "Post",
+      path: "/dashboardLayout/new-post",
+    },
+    {icon: <CgProfile />, label: "Profile", path: "/dashboardLayout/profile"},
+    {
+      icon: <IoIosGitPullRequest />,
+      label: "Access-Requests",
+      path: "/dashboardLayout/requests",
+    },
   ],
 };
 
