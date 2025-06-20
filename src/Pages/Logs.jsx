@@ -4,6 +4,7 @@ import Table from '../Components/Table';
 
 const Logs = () => {
   const [logs, setLogs] = React.useState([]);
+  const baseUrl = import.meta.env.VITE_BACKEND_URL || "https://localhost:7161";
 
   React.useEffect(() => {
     fetchLogs();
@@ -11,7 +12,7 @@ const Logs = () => {
 
   const fetchLogs = async () => {
       try {
-        const response = await fetch('https://localhost:7161/api/logs', {
+        const response = await fetch(`${baseUrl}/api/logs`, {
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${localStorage.getItem("token")}`,

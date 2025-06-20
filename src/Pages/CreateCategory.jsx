@@ -10,11 +10,12 @@ const CreateCategory = ({ open, onClose, onCategoryCreated }) => {
   const [departmentNames, setDepartmentNames] = useState([]);
   const [description, setDescription] = useState("");
   const [loading, setLoading] = useState(false);
+  const baseUrl = import.meta.env.VITE_BACKEND_URL || "https://localhost:7161";
 
   React.useEffect(() => {
     if (open) {
       const fetchData = async () => {
-        const data = await FetchData("https://localhost:7161/api/users/profile");
+        const data = await FetchData(`${baseUrl}/api/users/profile`);
         if (data && data.departmentIds && data.departmentIds.length > 0) {
           setDepartmentId(data.departmentIds[0]);
           setDepartmentIds(data.departmentIds);
@@ -30,7 +31,7 @@ const CreateCategory = ({ open, onClose, onCategoryCreated }) => {
     e.preventDefault();
     setLoading(true);
     try {
-      const res = await fetch("https://localhost:7161/api/categories", {
+      const res = await fetch(`${baseUrl}/api/categories`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

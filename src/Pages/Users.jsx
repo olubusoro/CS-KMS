@@ -3,12 +3,14 @@ import { Outlet} from 'react-router-dom';
 import CreateUserModal from '../Components/CreateUserModal';
 import Button from '../Props/Button';
 import Table from '../Components/Table';
+import environ from "../Utils/environment_functions";
 
-
+environ();
 
 const Users = () => {
     const [open, setOpen] = useState(false);
     const [users, setUsers] = useState([]);
+    const baseUrl = import.meta.env.VITE_BACKEND_URL || "https://localhost:7161";
     
     useEffect(() => {
         fetchUsers();
@@ -16,7 +18,7 @@ const Users = () => {
 
     const fetchUsers = async () => {
         try {
-            const response = await fetch('https://localhost:7161/api/users',{
+            const response = await fetch(`${baseUrl}/api/users`,{
                headers: {
                 "Content-Type": "application/json",
                 Authorization: `Bearer ${localStorage.getItem("token")}`,

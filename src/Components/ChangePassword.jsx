@@ -5,6 +5,7 @@ const ChangePassword= ({onClose}) => {
   const [oldPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmNewPassword, setConfirmPassword] = useState("");
+  const baseUrl = import.meta.env.VITE_BACKEND_URL || "https://localhost:7161";
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -16,7 +17,7 @@ const ChangePassword= ({onClose}) => {
     const token = localStorage.getItem("token");
     try {
       const res = await fetch(
-        `https://localhost:7161/api/Users/${parseInt(localStorage.getItem("userId"))}/change-password`,
+        `${baseUrl}/api/Users/${parseInt(localStorage.getItem("userId"))}/change-password`,
         {
           method: "PATCH",
           headers: {

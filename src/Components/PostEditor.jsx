@@ -27,6 +27,7 @@ const PostEditor = ({ onClose, onPostCreated }) => {
   const [departmentIds, setDepartmentIds] = useState([]);
   const [departmentId, setDepartmentId] = useState(0);
   const [departmentNames, setDepartmentNames] = useState([]);
+  const baseUrl = import.meta.env.VITE_BACKEND_URL || "https://localhost:7161";
 
   
   useEffect(() => {
@@ -43,7 +44,7 @@ const PostEditor = ({ onClose, onPostCreated }) => {
 
 const fetchUser = async () => {
     try {
-        const ires = await fetch("https://localhost:7161/api/users/profile",{
+        const ires = await fetch(`${baseUrl}/api/users/profile`,{
               headers: {
                 "Content-Type": "application/json",
                 Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -61,7 +62,7 @@ const fetchUser = async () => {
 
   const fetchDepartment = async (deptId) => {
     try { 
-      const res = await fetch(`https://localhost:7161/api/Departments/${deptId}`, {
+      const res = await fetch(`${baseUrl}/api/Departments/${deptId}`, {
         headers: {
           "Content-Type": "application/json",
           // Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -109,7 +110,7 @@ const fetchUser = async () => {
     try {
       const token = localStorage.getItem("token");
 
-      const res = await fetch("https://localhost:7161/api/Posts", {
+      const res = await fetch(`${baseUrl}/api/Posts`, {
         method: "POST",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -201,6 +202,7 @@ const fetchUser = async () => {
         onChange={setContent}
         modules={modules}
         theme="snow"
+        placeholder="Start typing your content here..."
       />
     
 

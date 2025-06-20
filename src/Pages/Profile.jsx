@@ -12,6 +12,7 @@ const roles = {
 
 const Profile = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const baseUrl = import.meta.env.VITE_BACKEND_URL || "https://localhost:7161";
 
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
@@ -23,7 +24,7 @@ const Profile = () => {
 
         const fetchProfile = async () => {
             try {
-                const res = await fetch(`https://localhost:7161/api/users/profile`, {
+                const res = await fetch(`${baseUrl}/api/users/profile`, {
                     method: "GET",
                     headers: {
                         Authorization: `Bearer ${token}`,

@@ -8,6 +8,7 @@ const FetchData = async (apiUrl) => {
     });
     if (!response.ok) {
       console.error(`HTTP error! status: ${response.status}`);
+      return [];
     }
     const data = await response.json();
     console.log("Data fetched successfully");

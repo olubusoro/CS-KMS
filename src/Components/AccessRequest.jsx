@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from "react";
+import FetchData from "../Utils/FetchData";
 
 const AccessRequest = () => {
   const [requests, setRequests] = useState([]);
@@ -8,22 +9,24 @@ const AccessRequest = () => {
 
   const fetchRequests = async () => {
     try {
-      const res = await fetch(`${baseUrl}/api/access-requests`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-
-      if (res.ok) {
-        const data = await res.json();
-        console.log("access request data", data)
-        setRequests(data);
-      } else {
-        alert("Failed to load access requests.");
+      const role = await FetchData(`${baseUrl}/api/users/role`);//localStorage.getItem("UserRole");
+      console.log("User Role:", role.message);
+      var deptRequests = [];
+      
+      if (role.message === "DeptAdmin"){
+        deptRequests = await FetchData(`${baseUrl}/api/access-requests/department`);
+        console.log('deptRequests fetched')
       }
-    } catch (err) {
-      console.error("Error fetching requests:", err);
-      alert("An error occurred.");
+      var privRequests = await FetchData(`${baseUrl}/api/access-requests/private`);
+
+      const allRequests = [...deptRequests, ...privRequests];
+
+      // Remove duplicates by id
+      const uniqueRequests = allRequests.filter(
+        (req, index, self) => index === self.findIndex((r) => r.id === req.id)
+      );
+
+      setRequests(uniqueRequests);
     } finally {
       setLoading(false);
     }
@@ -88,7 +91,7 @@ const AccessRequest = () => {
                     {req.postTitle}
                   </td>
                   <td className="p-3 border border-gray-300">
-                    {req.requester?.Name}
+                    {req.requesterName}
                   </td>
                   <td className="p-3 border border-gray-300">{req.reason}</td>
                   <td className="p-3 border border-gray-300 capitalize">
@@ -97,17 +100,17 @@ const AccessRequest = () => {
                   <td className="p-3 border border-gray-300 space-x-2">
                     <button
                       onClick={() => updateRequestStatus(req.id, "approved")}
-                      disabled={req.status !== 0}
+                      disabled={req.status !== "Pending"}
                       className="px-4 py-1 rounded bg-green-600 text-white text-sm disabled:opacity-50"
                     >
                       Approve
                     </button>
                     <button
-                      onClick={() => updateRequestStatus(req.id, "rejected")}
-                      disabled={req.status !== 0}
+                      onClick={() => updateRequestStatus(req.id, "denied")}
+                      disabled={req.status !== "Pending"}
                       className="px-4 py-1 rounded bg-red-600 text-white text-sm disabled:opacity-50"
                     >
-                      Reject
+                      Deny
                     </button>
                   </td>
                 </tr>

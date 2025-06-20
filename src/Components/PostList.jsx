@@ -12,7 +12,7 @@ const PostList = () => {
   const [reason, setReason] = useState("");
   const [postId, setPostId] = useState(0);
 
-  var baseUrl = import.meta.env.VITE_BACKEND_URL || "https://localhost:7161";
+  const baseUrl = import.meta.env.VITE_BACKEND_URL || "https://localhost:7161";
 
   useEffect(() => {
     setCurrentPage(1); // Reset to first page on search

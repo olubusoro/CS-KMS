@@ -15,7 +15,8 @@ const CreateUserModal = ({ open, onClose, onUserCreated }) => {
   const [departmentIds, setDepartmentIds] = useState([]);
   const [departmentsObjects, setDepartmentsObjects] = useState([]);
   const [loading, setLoading] = useState(false);
-
+  const baseUrl = import.meta.env.VITE_BACKEND_URL || "https://localhost:7161";
+  
   useEffect(() => {
     if (open) {
       fetchDepartments();
@@ -24,7 +25,7 @@ const CreateUserModal = ({ open, onClose, onUserCreated }) => {
 
   const fetchDepartments = async () => {
     try {
-      const res = await fetch("https://localhost:7161/api/Departments", {
+      const res = await fetch(`${baseUrl}/api/Departments`, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -33,8 +34,8 @@ const CreateUserModal = ({ open, onClose, onUserCreated }) => {
       const data = await res.json();
       setDepartmentsObjects(data);
     } catch (error) {
-        console.error("Error fetching departments:", error);
-        setDepartmentsObjects([{ id: 0, Name: "Error fetching departments" }]);
+      console.error("Error fetching departments:", error);
+      setDepartmentsObjects([{ id: 0, Name: "Error fetching departments" }]);
       alert("Failed to fetch departments.");
     }
   };
@@ -43,7 +44,7 @@ const CreateUserModal = ({ open, onClose, onUserCreated }) => {
     e.preventDefault();
     setLoading(true);
     try {
-      const res = await fetch("https://localhost:7161/api/Users", {
+      const res = await fetch(`${baseUrl}/api/Users`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -66,7 +67,7 @@ const CreateUserModal = ({ open, onClose, onUserCreated }) => {
         alert(data.message || "User creation failed.");
       }
     } catch (error) {
-        console.error("Error: ", error)
+      console.error("Error: ", error);
       alert("Something went wrong.");
     }
     setLoading(false);

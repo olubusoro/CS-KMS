@@ -7,6 +7,8 @@ import Button from "../Props/Button";
 import {jwtDecode} from "jwt-decode";
 import {useNavigate} from "react-router-dom";
 
+const baseUrl = import.meta.env.VITE_BACKEND_URL || "https://localhost:7161";
+
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -16,7 +18,7 @@ const Login = () => {
     e.preventDefault();
 
     try {
-      const res = await fetch("https://localhost:7161/api/Auth/login", {
+      const res = await fetch(`${baseUrl}/api/Auth/login`, {
         method: "POST",
         headers: {
           "content-type": "application/json",

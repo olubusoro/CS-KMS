@@ -6,6 +6,7 @@ const CreateDepartment = ({ open, onClose, onDepartmentCreated }) => {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [loading, setLoading] = useState(false);
+  const baseUrl = import.meta.env.VITE_BACKEND_URL || "https://localhost:7161";
 
 
 
@@ -13,7 +14,7 @@ const CreateDepartment = ({ open, onClose, onDepartmentCreated }) => {
     e.preventDefault();
     setLoading(true);
     try {
-      const res = await fetch("https://localhost:7161/api/Departments", {
+      const res = await fetch(`${baseUrl}/api/Departments`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

@@ -12,6 +12,9 @@ import { RiGroup3Fill } from "react-icons/ri";
 import { TbReportAnalytics } from "react-icons/tb";
 import { IoIosGitPullRequest } from "react-icons/io";
 import Logo from "../assets/Switch.jpeg";
+import FetchData from "../Utils/FetchData";
+
+const baseUrl = import.meta.env.VITE_BACKEND_URL || "https://localhost:7161";
 
 const menuConfig = {
   SuperAdmin: [
@@ -73,16 +76,21 @@ const menuConfig = {
 
 const defaultMenu = [
   { icon: <CgProfile />, label: "Profile", path: "/dashboardLayout/profile" },
-  { icon: <HiArrowSmRight />, label: "Login", path: "/login" },
+  { icon: <HiArrowSmRight />, label: "Login", path: "/" },
 ];
 
 const SideBar = ({ sidebarOpen, setSidebarOpen }) => {
   const [userRole, setUserRole] = useState(null);
   const location = useLocation();
 
+  const getUserRole = async () => {
+    const res = await FetchData(`${baseUrl}/api/users/role`);
+    return res.flag ? setUserRole(res.message) : console.error("error occurred: ", res.message);
+  }
+
   useEffect(() => {
     const token = localStorage.getItem("token");
-    const storedRole = localStorage.getItem("userRole");
+    const storedRole = getUserRole() || localStorage.getItem("userRole");
     if (token && storedRole) {
       setUserRole(storedRole);
     } else {

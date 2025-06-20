@@ -3,6 +3,7 @@
 @source "../.flowbite-react/class-list.json";
 
 @import "tailwindcss";
+@plugin "@tailwindcss/typography";
 
 @theme {
   --color-primary-50: #f0f9ff;
