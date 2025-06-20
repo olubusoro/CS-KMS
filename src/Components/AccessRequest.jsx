@@ -16,6 +16,7 @@ const AccessRequest = () => {
 
       if (res.ok) {
         const data = await res.json();
+        console.log("access request data", data)
         setRequests(data);
       } else {
         alert("Failed to load access requests.");
@@ -36,7 +37,7 @@ const AccessRequest = () => {
 
     try {
       const res = await fetch(endpoint, {
-        method: "POST",
+        method: "PATCH",
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -87,7 +88,7 @@ const AccessRequest = () => {
                     {req.postTitle}
                   </td>
                   <td className="p-3 border border-gray-300">
-                    {req.requesterName}
+                    {req.requester?.Name}
                   </td>
                   <td className="p-3 border border-gray-300">{req.reason}</td>
                   <td className="p-3 border border-gray-300 capitalize">
