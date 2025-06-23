@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { IoIosNotificationsOutline } from "react-icons/io";
 import { CiSettings, CiUser } from "react-icons/ci";
 import Logo from "../assets/Switch.jpeg";
@@ -7,6 +7,23 @@ import Logout from "./Logout";
 const TopBar = ({onSearch}) => {
   const [search, setSearch] = useState("");
   const [showNotifications, setShowNotifications] = useState(false);
+  const [notifications, setNotifications] = useState([]);
+
+  useEffect(() => {
+    const fetchNotifications = async () => {
+      const res = await fetch("https://localhost:7161/api/notifications", {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+      const data = await res.json();
+      console.log("Notifications: ", data);
+      setNotifications(data);
+    };
+
+    fetchNotifications();
+  }, []);
+
 
   const handleSearch = (e) => {
     e.preventDefault()
@@ -46,13 +63,30 @@ const TopBar = ({onSearch}) => {
         >
           <IoIosNotificationsOutline />
           {/* Notification dot */}
-          <span className="absolute top-1 right-1 block h-2 w-2 rounded-full bg-red-500"></span>
+          {notifications.length > 0 && (
+            <span className="absolute top-1 right-1 block h-2 w-2 rounded-full bg-red-500"></span>
+          )}
+          
         </button>
         {/* Example notification dropdown */}
         {showNotifications && (
           <div className="absolute right-16 top-14 bg-white border rounded shadow-lg w-64 p-4 z-40">
             <div className="font-semibold mb-2 text-green-700">Notifications</div>
-            <div className="text-sm text-gray-600">No new notifications.</div>
+            {notifications.length === 0 ? (
+               <div className="text-sm text-gray-600">No new notifications.</div>
+            ) : (
+              <ul className="space-y-2 max-h-60 overflow-y-auto">
+              {notifications.map((note) => (
+                
+                <li key={note.id} className="text-sm text-gray-700 border-b pb-2">
+                  <p>{note.message}</p>
+                  <p className="text-xs text-gray-400">{new Date(note.timestamp).toLocaleString()}</p>
+                </li>
+              ))}
+              </ul>
+            )
+          }
+           
           </div>
         )}
        <Logout

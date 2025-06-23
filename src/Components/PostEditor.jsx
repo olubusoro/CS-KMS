@@ -153,6 +153,7 @@ const fetchUser = async () => {
         value={description}
         onChange={(e) => setDescription(e.target.value)}
         className="w-full rounded border p-2"
+        required
       />
 
       {/* Show department select only if more than one department */}

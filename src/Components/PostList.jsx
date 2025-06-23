@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from "react";
 import Modal from "../Props/Modal";
-import {useOutletContext} from "react-router-dom";
+import { useOutletContext } from "react-router-dom";
+import {FaMountainSun} from "react-icons/fa6";
 
 const PostList = () => {
   const [posts, setPosts] = useState([]);
@@ -87,7 +88,7 @@ const PostList = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        alert(data.message || "Access request sent successfully!");
+        alert("Access request sent successfully!");
         setSelectedPost((prev) => ({
           ...prev,
           accessRequestStatus: "Requested",
@@ -163,10 +164,14 @@ const PostList = () => {
               <h3 className="font-bold text-2xl text-green-600 truncate">
                 {post.title}
               </h3>
-              <p className="text-sm text-gray-500 mt-20 line-clamp-3">
+              <p className="text-sm text-gray-500 mt-3 line-clamp-3">
                 {post.description}
               </p>
-              <div className="flex mt-27 justify-between text-xs text-gray-400">
+              <span className="flex align-center justify-center text-9xl text-gray-500" >
+                <FaMountainSun />
+              </span>
+              
+              <div className="flex mt-12 justify-between text-xs text-gray-400">
                 <span>{post.categoryName || "General"}</span>
                 <span>{new Date(post.createdAt).toLocaleDateString()}</span>
               </div>
