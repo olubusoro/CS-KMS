@@ -99,6 +99,8 @@ const PostList = () => {
       });
   };
 
+
+
   const getAttachmentUrl = async (PostId, AttachmentId, contentType) => {
     try {
       const res = await fetch(
@@ -148,21 +150,29 @@ const PostList = () => {
       {filteredPosts.length === 0 ? (
         <p>No posts found.</p>
       ) : (
-        currentPosts.map((post) => (
-          <div
-            key={post.id}
-            className="bg-white shadow-md rounded p-4 cursor-pointer hover:bg-gray-100"
-            onClick={() => {
-              handlePostClick(post);
-              setPostId(post.id);
-            }}
-          >
-            <h3 className="font-bold text-lg">{post.title}</h3>
-            <p className="text-sm text-gray-500 mb-2 line-clamp-2">
-              {post.description}
-            </p>
-          </div>
-        ))
+        <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+          {currentPosts.map((post) => (
+            <div
+              key={post.id}
+              className="bg-white h-70 shadow-md border rounded-lg p-4 cursor-pointer hover:shadow-lg transition-all"
+              onClick={() => {
+                handlePostClick(post);
+                setPostId(post.id);
+              }}
+            >
+              <h3 className="font-bold text-2xl text-green-600 truncate">
+                {post.title}
+              </h3>
+              <p className="text-sm text-gray-500 mt-20 line-clamp-3">
+                {post.description}
+              </p>
+              <div className="flex mt-27 justify-between text-xs text-gray-400">
+                <span>{post.categoryName || "General"}</span>
+                <span>{new Date(post.createdAt).toLocaleDateString()}</span>
+              </div>
+            </div>
+          ))}
+        </div>
       )}
 
       <div className="flex justify-center items-center gap-2 mt-4 flex-wrap">

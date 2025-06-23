@@ -17,7 +17,7 @@ const TopBar = ({onSearch}) => {
     <header className="w-full bg-white shadow flex items-center justify-between px-4 py-2 pb-3 sticky top-0 z-30">
       {/* Left: Brand Name */}
       <div className="flex items-center gap-2">
-        <span className="ml-2 font-bold text-lg text-green-700 hidden sm:inline">CS-KMS</span>
+        <span className="lg:ml-2 ml-10 font-bold text-lg text-green-700 hidden sm:inline">CS-KMS</span>
       </div>
       {/* Center: Search */}
       <form className="w-2xs mx-auto"  onSubmit={handleSearch} >
