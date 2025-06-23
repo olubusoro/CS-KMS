@@ -2,6 +2,7 @@ import React, {useState} from "react";
 import {Outlet} from "react-router-dom";
 import CreateCategory from "../Pages/CreateCategory";
 import Button from "../Props/Button";
+import CategoryList from "./CategoryList";
 
 const Category = () => {
   const [open, setOpen] = useState(false);
@@ -19,6 +20,9 @@ const Category = () => {
           onClose={() => setOpen(false)}
           onUserCreated={() => console.log("User created!")}
         />
+      </div>
+      <div className="mt-2">
+        <CategoryList />
       </div>
       <Outlet />
     </>

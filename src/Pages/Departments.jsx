@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import { Outlet} from 'react-router-dom';
 import CreateDepartment from '../Components/CreateDepartment';
 import Button from '../Props/Button';
+import DepartmentList from '../Components/DepartmentList';
 
 
 
@@ -22,6 +23,9 @@ const Departments = () => {
         onClose={() => setOpen(false)}
         onUserCreated={() => console.log("User created!")}
         />
+    </div>
+    <div className='mt-2'>
+      <DepartmentList />
     </div>
      <Outlet />
     </>
