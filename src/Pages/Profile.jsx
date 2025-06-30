@@ -36,7 +36,7 @@ const Profile = () => {
                     setProfile(data);
                     console.log("Profile fetched successfully", data);
                 } else {
-                    alert("failed to load profile ");
+                    toast.error("Something went wrong, try reloading the page.");
                 }
             } catch (err) {
                 console.error("profile error", err);

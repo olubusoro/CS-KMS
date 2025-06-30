@@ -5,7 +5,8 @@ import {MdOutlineEmail} from "react-icons/md";
 import {RiLockPasswordLine} from "react-icons/ri";
 import Button from "../Props/Button";
 import {jwtDecode} from "jwt-decode";
-import {useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 const baseUrl = import.meta.env.VITE_BACKEND_URL || "https://localhost:7161";
 
@@ -53,13 +54,13 @@ const Login = () => {
         localStorage.setItem("userRole", role);
         localStorage.setItem("userId", userId);
 
-        alert("Login successful!");
+        toast.success("Login successful!");
 
         // Navigate to dashboard layout and refresh to load sidebar correctly
         navigate("/dashboardLayout");
         // setTimeout(() => navigate(0), 200); // Refresh after short delay
       } else {
-        alert(data.message || "Login failed.");
+        toast.error(data.message || "Login failed.");
       }
     } catch (error) {
       console.error("Error:", error);

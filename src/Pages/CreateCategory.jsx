@@ -45,15 +45,15 @@ const CreateCategory = ({ open, onClose, onCategoryCreated }) => {
       });
       const data = await res.json();
       if (res.ok) {
-        alert(data.message || "Category created successfully!");
+        toast.success(data.message || "Category created successfully!");
         onCategoryCreated && onCategoryCreated();
         handleClose();
       } else {
-        alert(data.message || "Category creation failed.");
+        toast.error(data.message || "Category creation failed.");
       }
     } catch (error) {
         console.error("Error: ", error)
-      alert("Something went wrong.");
+      toast("Something went wrong.");
     }
     setLoading(false);
   };

@@ -1,6 +1,7 @@
 import React, { useState} from "react";
 import Button from '../Props/Button'
-import {FaTimes} from "react-icons/fa";
+import { FaTimes } from "react-icons/fa";
+import toast from "react-hot-toast"
 
 const CreateDepartment = ({ open, onClose, onDepartmentCreated }) => {
   const [name, setName] = useState("");
@@ -27,15 +28,15 @@ const CreateDepartment = ({ open, onClose, onDepartmentCreated }) => {
       });
       const data = await res.json();
       if (res.ok) {
-        alert(data.message || "Department created successfully!");
+        toast.success(data.message || "Department created successfully!");
         onDepartmentCreated && onDepartmentCreated();
         handleClose();
       } else {
-        alert(data.message || "Department creation failed.");
+        toast.error(data.message || "Department creation failed.");
       }
     } catch (error) {
         console.error("Error: ", error)
-      alert("Something went wrong.");
+      toast("Something went wrong.");
     }
     setLoading(false);
   };

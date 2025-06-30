@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Button from "../Props/Button"
+import toast from "react-hot-toast"
 
 const ChangePassword= ({onClose}) => {
   const [oldPassword, setCurrentPassword] = useState("");
@@ -10,7 +11,7 @@ const ChangePassword= ({onClose}) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (newPassword !== confirmNewPassword) {
-      alert("New passwords do not match.");
+      toast.error("New passwords do not match.");
       return;
     }
 
@@ -33,7 +34,7 @@ const ChangePassword= ({onClose}) => {
       );
 
       if (res.ok) {
-        alert("Password changed successfully");
+        toast.success("Password changed successfully");
         onClose();
       } else {
         const error = await res.text();
@@ -41,7 +42,7 @@ const ChangePassword= ({onClose}) => {
       }
     } catch (err) {
       console.error("Password change error", err);
-      alert("Failed to change password");
+      toast.error("Failed to change password");
     }
   };
 

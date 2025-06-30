@@ -21,7 +21,7 @@ const Departments = () => {
       <CreateDepartment
         open={open}
         onClose={() => setOpen(false)}
-        onUserCreated={() => console.log("User created!")}
+        onUserCreated={() => toast.success("User created!")}
         />
     </div>
     <div className='mt-2'>

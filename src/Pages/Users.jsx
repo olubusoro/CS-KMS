@@ -4,6 +4,7 @@ import CreateUserModal from '../Components/CreateUserModal';
 import Button from '../Props/Button';
 import Table from '../Components/Table';
 import environ from "../Utils/environment_functions";
+import toast from "react-hot-toast"
 
 environ();
 
@@ -47,7 +48,7 @@ const Users = () => {
       <CreateUserModal
         open={open}
         onClose={() => (setOpen(false), fetchUsers())}  
-        onUserCreated={() => console.log("User created!")}
+        onUserCreated={() => toast.success("User created!")}
         />
     </div>
     <div className='mt-5 p-5'>

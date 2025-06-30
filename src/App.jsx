@@ -11,11 +11,14 @@ import PostList from "./Components/PostList";
 import Logs from "./Pages/Logs"
 import ProtectedRoute from "./Components/ProtectedRoute";
 import Requests from "./Components/AccessRequest"
+import {Toaster} from "react-hot-toast";
 
 
 function App() {
   return (
-    <Routes>
+    <>
+      <Toaster />
+     <Routes>
       {/* Public Route */}
       <Route path="/" element={<Login />} />
 
@@ -37,6 +40,8 @@ function App() {
         <Route path="requests" element={<Requests />} />
       </Route>
     </Routes>
+    </>
+   
   );
 }
 

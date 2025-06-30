@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
-import {FaTimes} from "react-icons/fa";
+import { FaTimes } from "react-icons/fa";
+import toast from "react-hot-toast"
 
 const roles = [
   { value: 0, label: "Staff" },
@@ -36,7 +37,7 @@ const CreateUserModal = ({ open, onClose, onUserCreated }) => {
     } catch (error) {
       console.error("Error fetching departments:", error);
       setDepartmentsObjects([{ id: 0, Name: "Error fetching departments" }]);
-      alert("Failed to fetch departments.");
+      toast.error("Failed to fetch departments.");
     }
   };
 
@@ -60,15 +61,15 @@ const CreateUserModal = ({ open, onClose, onUserCreated }) => {
       });
       const data = await res.json();
       if (res.ok) {
-        alert(data.message || "User created successfully!");
+        toast.success(data.message || "User created successfully!");
         onUserCreated && onUserCreated();
         handleClose();
       } else {
-        alert(data.message || "User creation failed.");
+        toast.error(data.message || "User creation failed.");
       }
     } catch (error) {
       console.error("Error: ", error);
-      alert("Something went wrong.");
+      toast("Something went wrong.");
     }
     setLoading(false);
   };

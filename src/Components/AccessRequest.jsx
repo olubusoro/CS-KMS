@@ -52,7 +52,7 @@ const AccessRequest = () => {
         );
         alert(`Request ${action}`);
       } else {
-        alert("Failed to update status.");
+        toast.error("Failed to update status.");
       }
     } catch (err) {
       console.error("Status update error:", err);

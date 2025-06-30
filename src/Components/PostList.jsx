@@ -1,7 +1,8 @@
 import React, {useEffect, useState} from "react";
 import Modal from "../Props/Modal";
 import { useOutletContext } from "react-router-dom";
-import {FaMountainSun} from "react-icons/fa6";
+import { FaMountainSun } from "react-icons/fa6";
+import toast from "react-hot-toast"
 
 const PostList = () => {
   const [posts, setPosts] = useState([]);
@@ -72,7 +73,7 @@ const PostList = () => {
 
   const handleRequestAccess = async () => {
     if (!reason.trim()) {
-      alert("Please provide a reason for the access request.");
+      toast.error("Please provide a reason for the access request.");
       return;
     }
     await fetch(`${baseUrl}/api/access-requests`, {
@@ -88,7 +89,7 @@ const PostList = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        alert("Access request sent successfully!");
+        toast.success("Access request sent successfully!");
         setSelectedPost((prev) => ({
           ...prev,
           accessRequestStatus: "Requested",
@@ -96,7 +97,7 @@ const PostList = () => {
       })
       .catch((error) => {
         console.error("Failed to send access request:", error);
-        alert("An error occurred while sending the access request.");
+        toast.error("An error occurred while sending the access request.");
       });
   };
 

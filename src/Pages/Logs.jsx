@@ -1,5 +1,6 @@
 import React from 'react';
 import Table from '../Components/Table';
+import toast from "react-hot-toast"
 
 
 const Logs = () => {
@@ -21,9 +22,9 @@ const Logs = () => {
         if (response.ok) {
           const data = await response.json();
           setLogs(data);
-          console.log("Logs fetched successfully");
+          toast.log("Logs fetched successfully");
         } else {
-          console.error("Failed to fetch logs");
+          toast.error("Failed to fetch logs");
         }
       } catch (error) {
         console.error("Error fetching logs:", error);

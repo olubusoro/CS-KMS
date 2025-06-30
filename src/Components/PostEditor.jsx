@@ -2,7 +2,8 @@ import React, {useState, useEffect} from "react";
 import Button from "../Props/Button";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
-import "froala-editor/js/plugins/image.min.js";
+import toast from "react-hot-toast"
+
 
 
 
@@ -65,7 +66,7 @@ const fetchUser = async () => {
       const res = await fetch(`${baseUrl}/api/Departments/${deptId}`, {
         headers: {
           "Content-Type": "application/json",
-          // Authorization: `Bearer ${localStorage.getItem("token")}`,
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       });
       const data = await res.json();
@@ -83,14 +84,14 @@ const fetchUser = async () => {
     }catch (error) {
       console.error("Error fetching Departments:", error);
       setDepartment([{id: 0, Name: "Error fetching Departments"}]);
-      alert("Failed to fetch departments.");
+      console.error("Failed to fetch departments.");
     }
   }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!title || !content) {
-      alert("Please fill all fields");
+      toast.error("Please fill all fields");
       return;
     }
 
@@ -120,7 +121,7 @@ const fetchUser = async () => {
 
       if (res.ok) {
         const newPost = await res.json(); // assuming backend returns the created post
-        alert("Post created successfully!");
+        toast.success("Post created successfully!");
         setTitle("");
         setDescription("");
         setContent("");
@@ -130,11 +131,11 @@ const fetchUser = async () => {
 
         if (onPostCreated) onPostCreated(newPost);
       } else {
-        alert("Error creating post");
+        toast.error("Error creating post");
       }
     } catch (err) {
       console.error("Submit error:", err);
-      alert("Failed to submit");
+      toast("Failed to submit");
     }
   };
 
@@ -153,7 +154,7 @@ const fetchUser = async () => {
         value={description}
         onChange={(e) => setDescription(e.target.value)}
         className="w-full rounded border p-2"
-        required
+       
       />
 
       {/* Show department select only if more than one department */}
