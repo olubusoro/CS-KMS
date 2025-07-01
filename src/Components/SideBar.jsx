@@ -7,7 +7,7 @@ import {
 } from "react-icons/hi";
 import { MdOutlinePostAdd, MdCategory } from "react-icons/md";
 import { CgProfile } from "react-icons/cg";
-import { FaPeopleGroup } from "react-icons/fa6";
+import { FaPeopleGroup, FaComment } from "react-icons/fa6";
 import { RiGroup3Fill } from "react-icons/ri";
 import { TbReportAnalytics } from "react-icons/tb";
 import { IoIosGitPullRequest } from "react-icons/io";
@@ -40,6 +40,7 @@ const menuConfig = {
       label: "Access-Requests",
       path: "/dashboardLayout/requests",
     },
+    {icon: <FaComment />, label: "Feedback", path: "/dashboardLayout/feedback"},
   ],
   DeptAdmin: [
     {
@@ -58,6 +59,7 @@ const menuConfig = {
       label: "Access-Requests",
       path: "/dashboardLayout/requests",
     },
+    {icon: <FaComment />, label: "Feedback", path: "/dashboardLayout/send-feedback"}
   ],
   Staff: [
     {
@@ -71,6 +73,7 @@ const menuConfig = {
       label: "Access-Requests",
       path: "/dashboardLayout/requests",
     },
+    {icon: <FaComment />, label: "Feedback", path: "/dashboardLayout/send-feedback"}
   ],
 };
 
@@ -90,10 +93,10 @@ const SideBar = ({ sidebarOpen, setSidebarOpen }) => {
 
   useEffect(() => {
     const token = localStorage.getItem("token");
-    const storedRole = getUserRole() || localStorage.getItem("userRole");
-    if (token && storedRole) {
+    if (userRole === null && token) {
+      const storedRole = getUserRole() || localStorage.getItem("userRole");  
       setUserRole(storedRole);
-    } else {
+    } else if(!token) {
       setUserRole(null);
     }
   }, [location.pathname]);

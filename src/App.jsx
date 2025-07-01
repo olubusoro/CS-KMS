@@ -12,6 +12,8 @@ import Logs from "./Pages/Logs"
 import ProtectedRoute from "./Components/ProtectedRoute";
 import Requests from "./Components/AccessRequest"
 import {Toaster} from "react-hot-toast";
+import AdminFeedbackView from "./Components/FeedbackView";
+import Feedback from "./Components/Feedback";
 
 
 function App() {
@@ -38,6 +40,8 @@ function App() {
         <Route path="category" element={<Category />} />
         <Route path="logs" element={<Logs />} />
         <Route path="requests" element={<Requests />} />
+        <Route path="feedback" element={<AdminFeedbackView />} />
+        <Route path="send-feedback" element={<Feedback />} />
       </Route>
     </Routes>
     </>
