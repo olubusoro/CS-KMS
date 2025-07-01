@@ -93,11 +93,28 @@ const SideBar = ({ sidebarOpen, setSidebarOpen }) => {
 
   useEffect(() => {
     const token = localStorage.getItem("token");
-    if (userRole === null && token) {
-      const storedRole = getUserRole() || localStorage.getItem("userRole");  
-      setUserRole(storedRole);
-    } else if(!token) {
+    if (!token) {
       setUserRole(null);
+      return;
+    }
+
+    // Check if token is expired
+    try {
+      const payload = JSON.parse(atob(token.split('.')[1]));
+      if (payload.exp && Date.now() >= payload.exp * 1000) {
+        // Token expired
+        localStorage.removeItem("token");
+        setUserRole(null);
+        return;
+      }
+    } catch (e) {
+      // Invalid token format
+      setUserRole(null);
+      return;
+    }
+
+    if (userRole === null) {
+      getUserRole();
     }
   }, [location.pathname]);
 
