@@ -7,7 +7,7 @@ import {
 } from "react-icons/hi";
 import { MdOutlinePostAdd, MdCategory } from "react-icons/md";
 import { CgProfile } from "react-icons/cg";
-import { FaPeopleGroup } from "react-icons/fa6";
+import { FaPeopleGroup, FaComment } from "react-icons/fa6";
 import { RiGroup3Fill } from "react-icons/ri";
 import { TbReportAnalytics } from "react-icons/tb";
 import { IoIosGitPullRequest } from "react-icons/io";
@@ -40,6 +40,7 @@ const menuConfig = {
       label: "Access-Requests",
       path: "/dashboardLayout/requests",
     },
+    {icon: <FaComment />, label: "Feedback", path: "/dashboardLayout/feedback"},
   ],
   DeptAdmin: [
     {
@@ -58,6 +59,7 @@ const menuConfig = {
       label: "Access-Requests",
       path: "/dashboardLayout/requests",
     },
+    {icon: <FaComment />, label: "Feedback", path: "/dashboardLayout/send-feedback"}
   ],
   Staff: [
     {
@@ -71,6 +73,7 @@ const menuConfig = {
       label: "Access-Requests",
       path: "/dashboardLayout/requests",
     },
+    {icon: <FaComment />, label: "Feedback", path: "/dashboardLayout/send-feedback"}
   ],
 };
 
@@ -90,11 +93,28 @@ const SideBar = ({ sidebarOpen, setSidebarOpen }) => {
 
   useEffect(() => {
     const token = localStorage.getItem("token");
-    const storedRole = getUserRole() || localStorage.getItem("userRole");
-    if (token && storedRole) {
-      setUserRole(storedRole);
-    } else {
+    if (!token) {
       setUserRole(null);
+      return;
+    }
+
+    // Check if token is expired
+    try {
+      const payload = JSON.parse(atob(token.split('.')[1]));
+      if (payload.exp && Date.now() >= payload.exp * 1000) {
+        // Token expired
+        localStorage.removeItem("token");
+        setUserRole(null);
+        return;
+      }
+    } catch (e) {
+      // Invalid token format
+      setUserRole(null);
+      return;
+    }
+
+    if (userRole === null) {
+      getUserRole();
     }
   }, [location.pathname]);
 

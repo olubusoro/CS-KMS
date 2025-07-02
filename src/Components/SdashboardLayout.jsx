@@ -19,7 +19,7 @@ const DashboardLayout = () => {
         <TopBar onSearch={(value) => setSearchTerm(value)} />
 
         {/* Scrollable main content */}
-        <main className="flex-1 overflow-y-auto p-2 sm:p-4">
+        <main className="flex-1 overflow-y-auto p-2 sm:p-4 bg-gray-100">
           <Outlet context={{searchTerm}} />
         </main>
       </div>

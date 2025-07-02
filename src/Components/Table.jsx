@@ -35,12 +35,18 @@ const Table = ({ data, title }) => {
     return <div className="p-4 text-gray-500">No data available.</div>;
   }
 
+  const ids = data.map(obj => obj.id);
+  const cleanData = data.map(({ id, ...rest }, idx) => ({
+    SNo: idx + 1,
+    ...rest
+  }));
+
   return (
     <div className="overflow-x-auto w-full">
       <table className="min-w-full bg-white text-xs sm:text-sm md:text-base">
         <thead>
           <tr>
-            {Object.keys(data[0]).map((key) => (
+            {Object.keys(cleanData[0]).map((key) => (
               <th
                 key={key}
                 className="px-1 py-1 sm:px-2 sm:py-2 md:px-4 md:py-2 border-b-2 border-gray-200 text-left font-semibold text-gray-700 whitespace-nowrap"
@@ -54,7 +60,7 @@ const Table = ({ data, title }) => {
           </tr>
         </thead>
         <tbody>
-          {data.map((item, index) => (
+          {cleanData.map((item, index) => (
             <tr
               key={index}
               className="hover:bg-gray-100 transition-colors duration-200"

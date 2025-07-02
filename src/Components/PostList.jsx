@@ -206,7 +206,7 @@ const PostList = () => {
               <>
                 <p className="text-gray-600">{selectedPost.post.description}</p>
                 <div
-                  className="prose max-w-none"
+                  className="prose max-w-none wrap-break-word"
                   dangerouslySetInnerHTML={{__html: selectedPost.post.content}}
                 />
                 {selectedPost.post.attachments.length > 0 &&
