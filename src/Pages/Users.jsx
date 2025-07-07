@@ -5,6 +5,7 @@ import Button from '../Props/Button';
 import Table from '../Components/Table';
 import environ from "../Utils/environment_functions";
 import toast from "react-hot-toast"
+import UserTable from '../Components/UserTable';
 
 environ();
 
@@ -51,8 +52,8 @@ const Users = () => {
         onUserCreated={() => toast.success("User created!")}
         />
     </div>
-    <div className='mt-5 p-5'>
-      <Table data={users} title={'User'} />
+    <div className='mt-4'>
+      <UserTable users={users} onUserUpdate={fetchUsers} />
     </div>
   </div>
   );

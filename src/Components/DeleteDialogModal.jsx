@@ -1,8 +1,9 @@
-import { Button, Dialog, DialogPanel, DialogTitle } from '@headlessui/react'
-import { useState } from 'react'
-import { FaTimes } from "react-icons/fa";
+import { Button, Dialog, DialogPanel, DialogTitle } from '@headlessui/react';
+import { Button as UIButton } from './ui/button';
+import { useState } from 'react';
+import { FaTimes, FaTrash } from "react-icons/fa";
 
-export default function DeleteModal({title, onConfirm}) {
+export default function DeleteModal({title, onConfirm, buttonTitle }) {
   let [isOpen, setIsOpen] = useState(false)
 
   function open() {
@@ -22,12 +23,14 @@ export default function DeleteModal({title, onConfirm}) {
 
   return (
     <>
-      <Button
+      <UIButton
+      title={ buttonTitle ? buttonTitle : "Delete"}
+        variant="destructive"
         onClick={open}
-        className="px-1 sm:px-2 md:px-4 py-1 bg-red-500 text-white rounded hover:bg-red-600 transition ml-1 sm:ml-2 focus:not-data-focus:outline-none data-focus:outline data-focus:outline-red-600 data-hover:bg-red-600"
+        // className="px-1 sm:px-2 md:px-4 py-1 bg-red-500 text-white rounded hover:bg-red-600 transition ml-1 sm:ml-2 focus:not-data-focus:outline-none data-focus:outline data-focus:outline-red-600 data-hover:bg-red-600"
       >
-        Delete
-      </Button>
+        <FaTrash className="inline-block text-white" />
+      </UIButton>
 
       <Dialog open={isOpen} as="div" className="relative z-50 focus:outline-none" onClose={close} __demoMode>
         <div className="fixed inset-0 z-50 bg-black/40 w-screen backdrop-blur-[1px] overflow-y-auto">
@@ -43,7 +46,7 @@ export default function DeleteModal({title, onConfirm}) {
                 Delete {title ? title : "Item"}
               </DialogTitle>
               <p className="mt-2 text-sm/6 text-gray-600">
-                You are about to delete this {title ? title : "Item"}. This action cannot be undone. Please confirm that you want to proceed with the deletion.
+                You are about to delete this {title ? title : "Item"}. This action cannot be undone. Please confirm that you want to proceed with this destructive action.
               </p>
               <div className="mt-4 flex justify-around">
                 <Button

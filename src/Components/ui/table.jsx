@@ -1,7 +1,7 @@
 
 export const Table = ({ children, className = '' }) => {
   return (
-    <div className="overflow-x-auto rounded-lg border border-gray-200">
+    <div className={`overflow-x-auto ${null/*rounded-lg border border-gray-200*/}`}>
       <table className={`min-w-full border-collapse text-left text-gray-700 ${className}`}>
         {children}
       </table>
@@ -38,5 +38,13 @@ export const TableCell = ({ children, className = '' }) => {
     <td className={`py-3 px-4 ${className}`}>
       {children}
     </td>
+  );
+};
+
+export const TableHeaderCell = ({ children, className = '' }) => {
+  return (
+    <th className={`py-3 px-4 ${className}`}>
+      {children}
+    </th>
   );
 };

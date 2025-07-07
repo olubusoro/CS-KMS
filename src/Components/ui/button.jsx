@@ -1,5 +1,5 @@
 
-export const Button = ({ children, className = '', variant = 'default', onClick }) => {
+export const Button = ({ children, className = '', variant = 'default', onClick , title }) => {
   const baseStyles = 'px-4 py-2 rounded-md font-medium transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2';
   let variantStyles = '';
 
@@ -22,6 +22,7 @@ export const Button = ({ children, className = '', variant = 'default', onClick 
 
   return (
     <button
+      title={title ? title : undefined}
       className={`${baseStyles} ${variantStyles} ${className}`}
       onClick={onClick}
     >
