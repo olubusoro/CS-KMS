@@ -83,76 +83,85 @@ const UserTable = ({ users, onUserUpdate }) => {
     };
 
     const handleConfirm = async () => {
-        // You can handle the update logic here (e.g., API call)
-        // For now, just close the modal
-        console.log("Edit Form Data: ", editForm);
-        try{
-            const res = await fetch(`${baseUrl}/api/users`, {
-                method: 'PUT',
-                headers: {
-                    "Content-Type": "application/json",
-                    Authorization: `Bearer ${localStorage.getItem("token")}`,
-                },
-                body: JSON.stringify(editForm),
-            });
-            const data = await res.json();
-            if(res.ok){
-                toast(data.message || "user updated successfully");
-                console.log(data.message);
-                setSelected(null);
-                setEditForm(null);
-                if (onUserUpdate) onUserUpdate();
-            }else{
-                toast.error(data.message || "failed to update user");
-            }
-        }catch(err){
-            console.error("failed to update user: ", err);
-            toast.error("check your internet connection");
-        }
+      const updateUser = async () => {
+        const res = await fetch(`${baseUrl}/api/users`, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+          body: JSON.stringify(editForm),
+        });
+
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.message || "Failed to update user");
+        return data;
+      };
+
+      toast.promise(updateUser(), {
+        loading: "Updating user...",
+        success: (data) => {
+          setSelected(null);
+          setEditForm(null);
+          onUserUpdate?.();
+          return data.message || "User updated successfully";
+        },
+        error: (err) => err.message || "Something went wrong",
+      });
     };
+      
 
     const handleDelete = async (userId) => {
-        try {
-            const res = await fetch(`${baseUrl}/api/users/${userId}`, {
-            method: 'DELETE',
-            headers: {
-                Authorization: `Bearer ${localStorage.getItem("token")}`,
-            },
-            });
-            const data = await res.json();
-            if (res.ok) {
-                toast(data.message || "User deleted successfully");
-                if (onUserUpdate) onUserUpdate();
-            } else {
-                toast.error(data.message || "Failed to delete user");
-            }
-        } catch (err) {
-            console.error("Failed to delete user: ", err);
-            toast.error("Check your internet connection");
-        }
-    };
+      const deleteUser = async () => {
+        const res = await fetch(`${baseUrl}/api/users/${userId}`, {
+          method: "DELETE",
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.message || "Failed to delete user");
+        return data;
+      };
 
-    const handlePasswordReset = async (userId) => {
-        try {
-            const res = await fetch(`${baseUrl}/api/users/${userId}/reset-password`, {
-                method: 'PATCH',
-                headers: {
-                    'Content-Type': 'application/json',
-                    Authorization: `Bearer ${localStorage.getItem("token")}`,
-                }
-            });
-            const data = await res.json();
-            if(res.ok){
-                toast.success(data.message + ", email sent" || "Password reset successfully, email sent");
-                setPasswordResetModal(false);
-            }else{
-                toast.error(data.message || "Failed to reset password");
-            }
-        }catch (err){
-            console.error("Failed to reset password: ", err);
-            toast.error("Check your internet connection");
-        }
+      toast.promise(deleteUser(), {
+        loading: "Deleting user...",
+        success: () => {
+          onUserUpdate?.();
+          return  "User deleted successfully";
+        },
+        error: (err) => err.message || "Error deleting user",
+      });
     };
+      
+    const handlePasswordReset = async (userId) => {
+      const resetPassword = async () => {
+        const res = await fetch(
+          `${baseUrl}/api/users/${userId}/reset-password`,
+          {
+            method: "PATCH",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+          }
+        );
+        const data = await res.json();
+        if (!res.ok)
+          throw new Error(data.message || "Failed to reset password");
+        return data;
+      };
+
+      toast.promise(resetPassword(), {
+        loading: "Resetting password...",
+        success: (data) => {
+          setPasswordResetModal(false);
+          return data.message || "Password reset successfully, email sent";
+        },
+        error: (err) => err.message || "Error resetting password",
+      });
+    };
+      
 
     const headings = () => (<>
                         <TableRow className="px-1 py-1 sm:px-2 sm:py-2 md:px-4 md:py-2 border-b-2 border-gray-200 text-left font-semibold text-gray-700 whitespace-nowrap">
