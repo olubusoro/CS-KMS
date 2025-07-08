@@ -33,7 +33,8 @@ const Logs = () => {
 
   return (
     <div>
-      <div className='mt-5 p-5'>
+      <p className="ml-6 text-2xl"><strong>Audit logs</strong></p>
+      <div className='mt-0.5 p-5'>
         <Table data={logs} title={'Log'} />
       </div>
     </div>

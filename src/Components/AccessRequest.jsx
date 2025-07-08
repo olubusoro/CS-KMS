@@ -1,5 +1,7 @@
 import React, {useState, useEffect} from "react";
 import FetchData from "../Utils/FetchData";
+import { Table, TableHeader, TableHeaderCell,TableBody , TableRow, TableCell } from "./ui/table";
+import { Card } from "./ui/Card";
 
 const AccessRequest = () => {
   const [requests, setRequests] = useState([]);
@@ -73,31 +75,32 @@ const AccessRequest = () => {
       ) : requests.length === 0 ? (
         <p className="text-gray-500">No pending access requests.</p>
       ) : (
+        <Card>
         <div className="overflow-x-auto">
-          <table className="min-w-full text-left text-sm border-collapse border border-gray-300">
-            <thead className="bg-gray-100">
-              <tr>
-                <th className="p-3 border border-gray-300">Post</th>
-                <th className="p-3 border border-gray-300">Requested By</th>
-                <th className="p-3 border border-gray-300">Reason</th>
-                <th className="p-3 border border-gray-300">Status</th>
-                <th className="p-3 border border-gray-300">Action</th>
-              </tr>
-            </thead>
-            <tbody>
+          <Table className="min-w-full text-left text-sm border-collapse border border-gray-300">
+            <TableHeader className="bg-gray-100">
+              <TableRow>
+                <TableHeaderCell className="p-3 border border-gray-300">Post</TableHeaderCell>
+                <TableHeaderCell className="p-3 border border-gray-300">Requested By</TableHeaderCell>
+                <TableHeaderCell className="p-3 border border-gray-300">Reason</TableHeaderCell>
+                <TableHeaderCell className="p-3 border border-gray-300">Status</TableHeaderCell>
+                <TableHeaderCell className="p-3 border border-gray-300">Action</TableHeaderCell>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
               {requests.map((req) => (
-                <tr key={req.id} className="hover:bg-gray-50">
-                  <td className="p-3 border border-gray-300">
+                <TableRow key={req.id} className="hover:bg-gray-50">
+                  <TableCell className="p-3 border border-gray-300">
                     {req.postTitle}
-                  </td>
-                  <td className="p-3 border border-gray-300">
+                  </TableCell>
+                  <TableCell className="p-3 border border-gray-300">
                     {req.requesterName}
-                  </td>
-                  <td className="p-3 border border-gray-300">{req.reason}</td>
-                  <td className="p-3 border border-gray-300 capitalize">
+                  </TableCell>
+                  <TableCell className="p-3 border border-gray-300">{req.reason}</TableCell>
+                  <TableCell className="p-3 border border-gray-300 capitalize">
                     {req.status}
-                  </td>
-                  <td className="p-3 border border-gray-300 space-x-2">
+                  </TableCell>
+                  <TableCell className="p-3 border border-gray-300 space-x-2">
                     <button
                       onClick={() => updateRequestStatus(req.id, "approved")}
                       disabled={req.status !== "Pending"}
@@ -109,15 +112,16 @@ const AccessRequest = () => {
                       onClick={() => updateRequestStatus(req.id, "denied")}
                       disabled={req.status !== "Pending"}
                       className="px-4 py-1 rounded bg-red-600 text-white text-sm disabled:opacity-50"
-                    >
+                      >
                       Deny
                     </button>
-                  </td>
-                </tr>
+                  </TableCell>
+                </TableRow>
               ))}
-            </tbody>
-          </table>
+            </TableBody>
+          </Table>
         </div>
+      </Card>
       )}
     </div>
   );

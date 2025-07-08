@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import EditModal from "./EditModal";
 import { BiRotateLeft } from "react-icons/bi";
 import DeleteModal from "./DeleteDialogModal";
+import { Card } from "./ui/Card";
 
 const Table = ({ data, title }) => {
   const [editItem, setEditItem] = useState(null);
@@ -42,19 +43,20 @@ const Table = ({ data, title }) => {
   }));
 
   return (
+    <Card>
     <div className="overflow-x-auto w-full">
       <table className="min-w-full bg-white text-xs sm:text-sm md:text-base">
         <thead>
           <tr>
             {Object.keys(cleanData[0]).map((key) => (
               <th
-                key={key}
+              key={key}
                 className="px-1 py-1 sm:px-2 sm:py-2 md:px-4 md:py-2 border-b-2 border-gray-200 text-left font-semibold text-gray-700 whitespace-nowrap"
-              >
+                >
                 {key.charAt(0).toUpperCase() + key.slice(1)}
               </th>
             ))}{title && title.toLowerCase() === "user" && (
-            <th className="px-1 py-1 sm:px-2 sm:py-2 md:px-3 md:py-2 border-b-2 border-gray-200 text-left font-semibold text-gray-700 whitespace-nowrap">
+              <th className="px-1 py-1 sm:px-2 sm:py-2 md:px-3 md:py-2 border-b-2 border-gray-200 text-left font-semibold text-gray-700 whitespace-nowrap">
               Actions
             </th>)}
           </tr>
@@ -62,8 +64,8 @@ const Table = ({ data, title }) => {
         <tbody>
           {cleanData.map((item, index) => (
             <tr
-              key={index}
-              className="hover:bg-gray-100 transition-colors duration-200"
+            key={index}
+            className="hover:bg-gray-100 transition-colors duration-200"
             >
               {Object.values(item).map((value, idx) => (
                 <td
@@ -76,10 +78,10 @@ const Table = ({ data, title }) => {
               <td className="py-1 sm:py-2 border-b border-gray-200 whitespace-nowrap">
                 {title && title.toLowerCase() === "user" && (
                   <a
-                    href="#"
-                    title="Reset Password"
-                    aria-label="Reset Password"
-                    className="inline-flex items-center px-1 sm:px-2 md:px-3 py-1 text-base sm:text-lg text-gray-600 hover:text-blue-500 transition"
+                  href="#"
+                  title="Reset Password"
+                  aria-label="Reset Password"
+                  className="inline-flex items-center px-1 sm:px-2 md:px-3 py-1 text-base sm:text-lg text-gray-600 hover:text-blue-500 transition"
                   >
                     <span>
                       <BiRotateLeft className="inline-block mr-1 sm:mr-2 text-gray-500 hover:text-blue-500 transition" />
@@ -100,15 +102,16 @@ const Table = ({ data, title }) => {
       </table>
       {editItem && (
         <EditModal
-          open={!!editItem}
-          title={title ? `Edit ${title}` : "Edit Item"}
-          fields={fields}
-          initialData={editItem}
-          onClose={() => setEditItem(null)}
-          onSubmit={handleEditSubmit}
+        open={!!editItem}
+        title={title ? `Edit ${title}` : "Edit Item"}
+        fields={fields}
+        initialData={editItem}
+        onClose={() => setEditItem(null)}
+        onSubmit={handleEditSubmit}
         />
       )}
     </div>
+      </Card>
   );
 };
 

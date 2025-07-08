@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import FetchData from "../Utils/FetchData";
+import { Card } from "./ui/Card";
 
 
 const DepartmentList = () => {
@@ -33,6 +34,7 @@ const DepartmentList = () => {
       ) : departments.length === 0 ? (
         <p className="text-gray-500">No Departments found.</p>
       ) : (
+        <Card>
         <div className="overflow-x-auto">
           <table className="min-w-full text-left text-sm border-collapse border border-gray-300">
             <thead className="bg-gray-100">
@@ -55,6 +57,7 @@ const DepartmentList = () => {
             </tbody>
           </table>
         </div>
+      </Card>
       )}
     </div>
   );
