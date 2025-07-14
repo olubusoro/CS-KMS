@@ -36,9 +36,9 @@ const Posts = () => {
   const handleNewPost = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
 
-  const handlePostCreated = (newPost) => {
+  const handlePostCreated = () => {
     // Prepend the new post to the list
-    setPosts([newPost, ...posts]);
+    fetchPosts();
     closeModal();
   };
 
@@ -50,7 +50,7 @@ const Posts = () => {
         className="border rounded-xl w-30 cursor-pointer hover:bg-green-700 bg-green-500 p-3"
       />
 
-      <Modal isOpen={isModalOpen} onClose={closeModal}>
+      <Modal isOpen={isModalOpen} onClose={closeModal} className="w-full max-w-7xl">
         <PostEditor onClose={closeModal} onPostCreated={handlePostCreated} />
       </Modal>
 

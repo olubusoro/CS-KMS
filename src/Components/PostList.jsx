@@ -4,8 +4,8 @@ import { useOutletContext } from "react-router-dom";
 import { FaMountainSun } from "react-icons/fa6";
 import toast from "react-hot-toast"
 
-const PostList = () => {
-  const [posts, setPosts] = useState([]);
+const PostList = ({posts}) => {
+ // const [posts, setPosts] = useState(posts);
   const [selectedPost, setSelectedPost] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const postsPerPage = 11;
@@ -19,30 +19,6 @@ const PostList = () => {
   useEffect(() => {
     setCurrentPage(1); // Reset to first page on search
   }, [searchTerm]);
-
-  const fetchPosts = async () => {
-    try {
-      const token = localStorage.getItem("token");
-      const res = await fetch(`${baseUrl}/api/Posts`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-
-      const data = await res.json();
-
-      // Sort by newest first
-      const sortedPosts = data.sort((a, b) => b.id - a.id);
-
-      setPosts(sortedPosts);
-    } catch (error) {
-      console.error("Failed to fetch posts:", error);
-    }
-  };
-
-  useEffect(() => {
-    fetchPosts();
-  }, []);
 
   const filteredPosts = posts.filter(
     (post) =>
