@@ -7,13 +7,13 @@ import Users from "./Pages/Users";
 import Departments from "./Pages/Departments";
 import Profile from "./Pages/Profile";
 import Category from "./Components/Category";
-import PostList from "./Components/PostList";
 import Logs from "./Pages/Logs"
 import ProtectedRoute from "./Components/ProtectedRoute";
 import Requests from "./Components/AccessRequest"
 import {Toaster} from "react-hot-toast";
 import AdminFeedbackView from "./Components/FeedbackView";
 import Feedback from "./Components/Feedback";
+import IndexPage from "./Pages/IndexPage";
 
 
 function App() {
@@ -30,7 +30,7 @@ function App() {
           <DashboardLayout />
         </ProtectedRoute>
         }>
-        <Route index element={<PostList />} />
+        <Route index element={<IndexPage />} />
         <Route path="new-post" element={<Post />}>
           <Route path="editor" element={<Editor />} />
         </Route>
