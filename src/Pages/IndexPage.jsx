@@ -24,7 +24,7 @@ const IndexPage = () => {
 
   React.useEffect(() => {
     fetchPosts();
-  });
+  },[]);
 
   return (
     <div>
