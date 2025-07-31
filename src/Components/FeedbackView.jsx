@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { Card } from "../ui/card";
 import { Table, TableHeader, TableRow, TableCell, TableBody } from "./ui/table";
-import { Button } from "./ui/button";
-import { Modal } from "./ui/modal";
+import { Button } from "../ui/button";
+import { Modal } from "../ui/modal";
 import FetchData from "../Utils/FetchData";
 
 export default function AdminFeedbackView() {

@@ -1,8 +1,8 @@
 import { Table, TableHeader, TableHeaderCell, TableRow, TableCell, TableBody } from "./ui/table";
 import { useState } from "react";
-import { Button } from "./ui/button";
+import { Button } from "../ui/button";
 import { Card } from "../ui/card";
-import { Modal } from "./ui/modal";
+import { Modal } from "../ui/modal";
 import FetchData from "../Utils/FetchData";
 import toast from "react-hot-toast";
 import DeleteModal from "./DeleteDialogModal";
