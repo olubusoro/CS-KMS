@@ -1,5 +1,5 @@
 import { Button, Dialog, DialogPanel, DialogTitle } from '@headlessui/react';
-import { Button as UIButton } from './ui/button';
+import { Button as UIButton } from '../ui/button';
 import { useState } from 'react';
 import { FaTimes, FaTrash } from "react-icons/fa";
 

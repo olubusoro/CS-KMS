@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from "react";
 import FetchData from "../Utils/FetchData";
-import { Table, TableHeader, TableHeaderCell,TableBody , TableRow, TableCell } from "./ui/table";
+import { Table, TableHeader, TableHeaderCell,TableBody , TableRow, TableCell } from "../ui/table";
 import { Card } from "../ui/card";
 
 const AccessRequest = () => {
